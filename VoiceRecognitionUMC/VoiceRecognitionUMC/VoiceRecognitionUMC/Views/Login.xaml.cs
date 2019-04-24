@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
-namespace VoiceRecognitionUMC
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace VoiceRecognitionUMC.Views
 {
-    public partial class MainPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class Login : ContentPage
     {
-        public MainPage()
+        public Login()
         {
             InitializeComponent();
         }
