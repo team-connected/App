@@ -4,10 +4,9 @@
              x:Class="VoiceRecognitionUMC.Views.VoiceRecognition"
              Title="Meting">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="10,50,10,10">
+            <Button Text="Start" Command="{Binding StartRecordingCommand}" IsEnabled="{Binding Enabled}"/>
+            <Label Text="{Binding RecognizedText}" HorizontalOptions="Center" VerticalOptions="Center"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
