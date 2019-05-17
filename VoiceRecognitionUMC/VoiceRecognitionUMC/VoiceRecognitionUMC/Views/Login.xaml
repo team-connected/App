@@ -2,12 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VoiceRecognitionUMC.Views.Login"
-             Title="Login">
+             Title="Login"
+             BackgroundColor="#3C6EB7">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Spacing="15" HorizontalOptions="Fill">
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                <Image Source="utrecht.png" WidthRequest="150" HeightRequest="150" Margin="0"/>
+                <Entry x:Name="Entry_First" Placeholder="Gebruikersnaam" Margin="0" TextColor="White" PlaceholderColor="White" WidthRequest="250"/>
+                <Entry x:Name="Entry_Second" Placeholder="Wachtwoord" Margin="0" TextColor="White" PlaceholderColor="White" WidthRequest="250"/>
+                <Button x:Name="Login_Button" Command="{Binding LoginCommand}" BackgroundColor="LightGray" Text="Login" TextColor="Black" WidthRequest="250" Margin="5"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
