@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceRecognitionUMC.Android", "VoiceRecognitionUMC\VoiceRecognitionUMC.Android\VoiceRecognitionUMC.Android.csproj", "{F6869714-D965-42D9-ADD7-57A76387C64F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceRecognitionUMC.iOS", "VoiceRecognitionUMC\VoiceRecognitionUMC.iOS\VoiceRecognitionUMC.iOS.csproj", "{504007C1-9867-4AA2-AA0C-E53F8B219988}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceRecognitionUMC", "VoiceRecognitionUMC\VoiceRecognitionUMC\VoiceRecognitionUMC.csproj", "{1D7A441B-4B1C-419F-A387-4C1057E6D6CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VoiceRecognitionUMC", "VoiceRecognitionUMC\VoiceRecognitionUMC\VoiceRecognitionUMC.csproj", "{1D7A441B-4B1C-419F-A387-4C1057E6D6CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceRecognitionUMCTests", "VoiceRecognitionUMCTests\VoiceRecognitionUMCTests.csproj", "{2E11BB55-2E19-4292-894C-CEF3EC56F10C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -133,6 +135,30 @@ Global
 		{1D7A441B-4B1C-419F-A387-4C1057E6D6CA}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{1D7A441B-4B1C-419F-A387-4C1057E6D6CA}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{1D7A441B-4B1C-419F-A387-4C1057E6D6CA}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.AppStore|Any CPU.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.AppStore|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Release|iPhone.Build.0 = Release|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{2E11BB55-2E19-4292-894C-CEF3EC56F10C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

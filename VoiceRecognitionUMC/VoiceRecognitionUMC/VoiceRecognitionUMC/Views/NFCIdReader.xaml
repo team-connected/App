@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VoiceRecognitionUMC.Views.NFCIdReader"
+             BackgroundColor="#3C6EB7">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Tap op de knop hieronder om te beginnen met scannen!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="Center"
+                TextColor="#FFFFFF"/>
+            <Button Text="Start!"
+                    FontSize="22px"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
