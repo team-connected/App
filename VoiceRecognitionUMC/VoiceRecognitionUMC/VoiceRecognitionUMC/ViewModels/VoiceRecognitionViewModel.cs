@@ -3,6 +3,8 @@ using VoiceRecognitionUMC.Dependency;
 using Prism.Commands;
 using Xamarin.Forms;
 using System;
+using VoiceRecognitionUMC.Persistence;
+using VoiceRecognitionUMC.Model;
 
 namespace VoiceRecognitionUMC.ViewModels
 {
@@ -13,6 +15,7 @@ namespace VoiceRecognitionUMC.ViewModels
         private INavigationService _navigationService;
         private string _recognizedText;
         private bool _enabled = true;
+        private IPatientService _patientService;
         #endregion
 
         #region PROPERTIES
@@ -36,6 +39,7 @@ namespace VoiceRecognitionUMC.ViewModels
         public VoiceRecognitionViewModel(INavigationService navigationService) : base(navigationService)
         {
             StartRecordingCommand = new DelegateCommand(StartButtonClicked);
+            _patientService = new PatientService();
 
             try
             {
@@ -64,7 +68,7 @@ namespace VoiceRecognitionUMC.ViewModels
             RecognizedText = args;
         }
 
-        private void StartButtonClicked()
+        private async void StartButtonClicked()
         {
             /*try
             {
@@ -75,6 +79,7 @@ namespace VoiceRecognitionUMC.ViewModels
                 RecognizedText = ex.Message;
             }*/
             _speechRecognitionInstance.StartSpeechToText();
+
         }
         #endregion
     }

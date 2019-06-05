@@ -19,14 +19,17 @@ namespace VoiceRecognitionUMC.Droid.Voice
 {
     class SpeechToTextImplementation : ISpeechToText
     {
+        
         private readonly int VOICE = 10;
         private Activity _activity;
+        private SpeechRecognizer recognizer;
         
         public SpeechToTextImplementation()
         {
             _activity = CrossCurrentActivity.Current.Activity;
+            recognizer = SpeechRecognizer.CreateSpeechRecognizer(_activity);
         }
-
+        
         public void StartSpeechToText()
         {
             StartRecordingAndRecognizing();
@@ -37,6 +40,7 @@ namespace VoiceRecognitionUMC.Droid.Voice
             string rec = global::Android.Content.PM.PackageManager.FeatureMicrophone;
             if (rec == "android.hardware.microphone")
             {
+                
                 var voiceIntent = new Intent(RecognizerIntent.ActionRecognizeSpeech);
                 voiceIntent.PutExtra(RecognizerIntent.ExtraLanguageModel, RecognizerIntent.LanguageModelFreeForm);
 
