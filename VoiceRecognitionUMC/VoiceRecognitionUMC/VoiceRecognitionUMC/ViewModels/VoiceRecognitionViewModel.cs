@@ -15,7 +15,7 @@ namespace VoiceRecognitionUMC.ViewModels
         private INavigationService _navigationService;
         private string _recognizedText;
         private bool _enabled = true;
-        private IPatientService _patientService;
+        private IMetricService _metricService;
         #endregion
 
         #region PROPERTIES
@@ -39,7 +39,7 @@ namespace VoiceRecognitionUMC.ViewModels
         public VoiceRecognitionViewModel(INavigationService navigationService) : base(navigationService)
         {
             StartRecordingCommand = new DelegateCommand(StartButtonClicked);
-            _patientService = new PatientService();
+            _metricService = new MetricService();
 
             try
             {
@@ -78,7 +78,23 @@ namespace VoiceRecognitionUMC.ViewModels
             {
                 RecognizedText = ex.Message;
             }*/
-            _speechRecognitionInstance.StartSpeechToText();
+            //_speechRecognitionInstance.StartSpeechToText();
+
+            var newMetric = new MetricCreate();
+            newMetric.timestamp = DateTime.Now;
+            newMetric.device_id = "59ce02a3e87d42f3b467c161502c824e";
+            newMetric.nurse_id = "72ddbd32092346a38ed89309aa06d3e5";
+            newMetric.comment = "Test";
+
+            var newMetricResponse = await _metricService.CreateMetric(newMetric, "ac3d09e21c974ab1a054ff2f74e9d42e");
+
+            var updateMetric = new Metric();
+            updateMetric.metric_id = newMetricResponse.createMetric;
+            updateMetric.nurse_id = "72ddbd32092346a38ed89309aa06d3e5";
+            updateMetric.patient_id = "ac3d09e21c974ab1a054ff2f74e9d42e";
+            updateMetric.raw_text = "registreer bloeddruk is 120 over 80";
+
+            await _metricService.SaveMetric(updateMetric);
 
         }
         #endregion

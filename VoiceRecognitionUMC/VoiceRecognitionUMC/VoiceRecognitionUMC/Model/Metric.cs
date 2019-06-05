@@ -6,9 +6,9 @@ namespace VoiceRecognitionUMC.Model
 {
     class Metric
     {
-        public string Metric_Id { get; set; }
-        public string Patient_Id { get; set; }
-        public string Nurse_Id { get; set; }
-        public string Raw_Text { get; set; }
+        public string metric_id { get; set; }
+        public string patient_id { get; set; }
+        public string nurse_id { get; set; }
+        public string raw_text { get; set; }
     }
 }
