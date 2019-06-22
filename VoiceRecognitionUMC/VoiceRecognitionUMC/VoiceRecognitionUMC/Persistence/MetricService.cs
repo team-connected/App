@@ -66,5 +66,26 @@ namespace VoiceRecognitionUMC.Persistence
 
             return responseMessage;
         }
+
+        public async Task<GetMetric> GetMetric(string metricId)
+        {
+            List<GetMetric> metric = new List<GetMetric>();
+            var uri = new Uri($"http://umc-api.maartenmol.nl:5000/api/v1/metric/_id={metricId}");
+
+            try
+            {
+                var response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    metric = JsonConvert.DeserializeObject<List<GetMetric>>(content);
+                }
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+
+            return metric[0];
+        }
     }
 }

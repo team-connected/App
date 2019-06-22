@@ -5,6 +5,9 @@ using Xamarin.Forms;
 using System;
 using VoiceRecognitionUMC.Persistence;
 using VoiceRecognitionUMC.Model;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Acr.UserDialogs;
 
 namespace VoiceRecognitionUMC.ViewModels
 {
@@ -13,33 +16,25 @@ namespace VoiceRecognitionUMC.ViewModels
         #region MEMBERS
         private ISpeechToText _speechRecognitionInstance;
         private INavigationService _navigationService;
-        private string _recognizedText;
-        private bool _enabled = true;
         private IMetricService _metricService;
-        #endregion
-
-        #region PROPERTIES
-        public string RecognizedText
-        {
-            get { return this._recognizedText; }
-            set { SetProperty(ref _recognizedText, value); }
-        }
-        public bool Enabled
-        {
-            get { return this._enabled; }
-            set { SetProperty(ref _enabled, value); }
-        }
+        private List<string> metrics;
         #endregion
 
         #region COMMANDS
         public DelegateCommand StartRecordingCommand { get; private set; }
+        public DelegateCommand ResetMetricCommand { get; private set; }
+        public DelegateCommand FinishMetricCommand { get; private set; }
         #endregion
 
         #region CONSTRUCTOR
         public VoiceRecognitionViewModel(INavigationService navigationService) : base(navigationService)
         {
             StartRecordingCommand = new DelegateCommand(StartButtonClicked);
+            ResetMetricCommand = new DelegateCommand(ResetMetric);
+            FinishMetricCommand = new DelegateCommand(FinishMetric);
+            _navigationService = navigationService;
             _metricService = new MetricService();
+            metrics = new List<string>();
 
             try
             {
@@ -47,7 +42,11 @@ namespace VoiceRecognitionUMC.ViewModels
             }
             catch (Exception ex)
             {
-                RecognizedText = ex.Message;
+                var toastConfig = new ToastConfig("Er is iets mis gegaan bij het opnemen. Neem contact op wanneer dit blijft gebeuren");
+                toastConfig.SetDuration(5000);
+                toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
+
+                UserDialogs.Instance.Toast(toastConfig);
             }
 
             MessagingCenter.Subscribe<ISpeechToText, string>(this, "STT", (sender, args) =>
@@ -59,43 +58,109 @@ namespace VoiceRecognitionUMC.ViewModels
             {
                 SpeechToTextFinalResultReceived(args);
             });
+
+            StartListening();
         }
         #endregion
 
         #region FUNCTIONS
         private void SpeechToTextFinalResultReceived(string args)
         {
-            RecognizedText = args;
+            if (args.ToLower().Contains("registreer"))
+            {
+                string reworkedString = args.Substring(args.ToLower().IndexOf("registreer"));
+                string[] splittedVoiceText = Regex.Split(reworkedString, "registreer");
+
+                foreach (string line in splittedVoiceText)
+                {
+                    string metricLine = "registreer" + line;
+                    if (metricLine != "registreer")
+                    {
+                        metrics.Add(metricLine);
+                    }
+                }
+
+                foreach (string s in metrics)
+                {
+                    Console.WriteLine(s);
+                }
+            }
+
+            StartListening();
         }
 
-        private async void StartButtonClicked()
+        private void StartListening()
         {
-            /*try
+            try
             {
                 _speechRecognitionInstance.StartSpeechToText();
             }
             catch (Exception ex)
             {
-                RecognizedText = ex.Message;
-            }*/
-            //_speechRecognitionInstance.StartSpeechToText();
+                var toastConfig = new ToastConfig("Er is iets mis gegaan bij het opnemen. Neem contact op wanneer dit blijft gebeuren");
+                toastConfig.SetDuration(5000);
+                toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
 
-            var newMetric = new MetricCreate();
-            newMetric.timestamp = DateTime.Now;
-            newMetric.device_id = "59ce02a3e87d42f3b467c161502c824e";
-            newMetric.nurse_id = "72ddbd32092346a38ed89309aa06d3e5";
-            newMetric.comment = "Test";
+                UserDialogs.Instance.Toast(toastConfig);
+            }
+        }
 
-            var newMetricResponse = await _metricService.CreateMetric(newMetric, "ac3d09e21c974ab1a054ff2f74e9d42e");
+        private void StartButtonClicked()
+        {
+            try
+            {
+                _speechRecognitionInstance.StartSpeechToText();
+            }
+            catch (Exception ex)
+            {
+                var toastConfig = new ToastConfig("Er is iets mis gegaan bij het opnemen. Neem contact op wanneer dit blijft gebeuren");
+                toastConfig.SetDuration(5000);
+                toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
 
-            var updateMetric = new Metric();
-            updateMetric.metric_id = newMetricResponse.createMetric;
-            updateMetric.nurse_id = "72ddbd32092346a38ed89309aa06d3e5";
-            updateMetric.patient_id = "ac3d09e21c974ab1a054ff2f74e9d42e";
-            updateMetric.raw_text = "registreer bloeddruk is 120 over 80";
+                UserDialogs.Instance.Toast(toastConfig);
+            }
+        }
 
-            await _metricService.SaveMetric(updateMetric);
+        private void ResetMetric()
+        {
+            metrics.Clear();
+            metrics = new List<string>();
 
+            StartListening();
+        }
+
+        private async void FinishMetric()
+        {
+            MetricCreate newMetric = new MetricCreate
+            {
+                device_id = "1391109f9910481c933970c5db966358",
+                metric_type = "",
+                nurse_id = "nv7sg3vrxrwr8y8vugamdztxzrhwemhj",
+                timestamp = DateTime.Now,
+                comment = "Voice Test"
+            };
+
+            var metricResponse = await _metricService.CreateMetric(newMetric, "43smekrqprd5ptjt1z5pwb9nxliz81nu");
+
+            foreach (string metric in metrics)
+            {
+                Metric updateMetric = new Metric
+                {
+                    raw_text = metric,
+                    patient_id = "43smekrqprd5ptjt1z5pwb9nxliz81nu",
+                    nurse_id = "nv7sg3vrxrwr8y8vugamdztxzrhwemhj",
+                    metric_id = metricResponse.createMetric
+                };
+
+                await _metricService.SaveMetric(updateMetric);
+            }
+
+            var navigationParams = new NavigationParameters
+            {
+                { "metricId", metricResponse.createMetric }
+            };
+
+            await _navigationService.NavigateAsync("../MetricResult", navigationParams);
         }
         #endregion
     }

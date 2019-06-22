@@ -10,5 +10,6 @@ namespace VoiceRecognitionUMC.Persistence
     {
         Task SaveMetric(Metric metric);
         Task<MetricResponse> CreateMetric(MetricCreate metric, string patientId);
+        Task<GetMetric> GetMetric(string metricId);
     }
 }

@@ -4,9 +4,12 @@ using System.Text;
 
 namespace VoiceRecognitionUMC.Model
 {
-    class MetricCreate
+    class GetMetric
     {
-        public string metric_type { get; set; }
+        public string _id { get; set; }
+        public string bloeddruk { get; set; }
+        public string gewicht { get; set; }
+        public string temperatuur { get; set; }
         public DateTime timestamp { get; set; }
         public string device_id { get; set; }
         public string nurse_id { get; set; }
