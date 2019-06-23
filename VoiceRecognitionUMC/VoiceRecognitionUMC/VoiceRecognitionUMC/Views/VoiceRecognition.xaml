@@ -2,12 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VoiceRecognitionUMC.Views.VoiceRecognition"
-             Title="Meting">
+             Title="Meting"
+             BackgroundColor="#3C6EB7">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="10,50,10,10">
+            <Button Text="Luister" Command="{Binding StartRecordingCommand}" HeightRequest="100" WidthRequest="100" BorderRadius="60" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <Grid HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="Reset Meting" Grid.Column="0" Command="{Binding ResetMetricCommand}"/>
+                <Button Text="Meting Afronden" Grid.Column="1" Command="{Binding FinishMetricCommand}"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

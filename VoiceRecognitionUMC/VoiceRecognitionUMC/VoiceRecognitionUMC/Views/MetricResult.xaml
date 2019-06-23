@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VoiceRecognitionUMC.Views.MetricResult"
+             Title="Resultaat">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding Metrics}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding NurseName}" Grid.Column="0" Grid.Row="0"/>
+                                <Label Text="{Binding Device}" Grid.Column="1" Grid.Row="0"/>
+                                <Label Text="{Binding MetricType}" Grid.Column="0" Grid.Row="1"/>
+                                <Label Text="{Binding MetricValue}" Grid.Column="1" Grid.Row="1"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

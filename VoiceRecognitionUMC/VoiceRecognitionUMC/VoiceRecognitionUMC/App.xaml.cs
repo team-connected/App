@@ -28,6 +28,7 @@ namespace VoiceRecognitionUMC
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<Login, LoginViewModel>();
             containerRegistry.RegisterForNavigation<VoiceRecognition, VoiceRecognitionViewModel>();
+            containerRegistry.RegisterForNavigation<MetricResult, MetricResultViewModel>();
         }
 
         protected override void OnStart()

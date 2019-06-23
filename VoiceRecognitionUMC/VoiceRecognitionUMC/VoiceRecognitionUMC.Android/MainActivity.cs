@@ -10,19 +10,25 @@ using Android.Nfc;
 using Android.Content;
 using Poz1.NFCForms.Droid;
 using Poz1.NFCForms.Abstract;
+using Android.Content;
+using Android.Speech;
+using Xamarin.Forms;
+
 
 namespace VoiceRecognitionUMC.Droid
 {
     [Activity(Label = "VoiceRecognitionUMC", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IMessageSender
     {
         public NfcAdapter NFCdevice;
         public NfcForms x;
+        private readonly int VOICE = 10;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+                      
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -68,6 +74,27 @@ namespace VoiceRecognitionUMC.Droid
         {
             base.OnNewIntent(intent);
             x.OnNewIntent(this, intent);
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if (requestCode == VOICE)
+            {
+                if (resultCode == Result.Ok)
+                {
+                    var matches = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
+                    if (matches.Count != 0)
+                    {
+                        string textInput = matches[0];
+                        MessagingCenter.Send<IMessageSender, string>(this, "STT", textInput);
+                    }
+                    else
+                    {
+                        MessagingCenter.Send<IMessageSender, string>(this, "STT", "No Input");
+                    }
+                }
+            }
+            base.OnActivityResult(requestCode, resultCode, data);
         }
     }
 }
