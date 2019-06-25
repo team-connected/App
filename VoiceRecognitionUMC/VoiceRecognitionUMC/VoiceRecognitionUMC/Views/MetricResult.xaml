@@ -5,7 +5,7 @@
              Title="Resultaat">
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding Metrics}">
+            <ListView ItemsSource="{Binding Metrics}" SelectedItem="{Binding SelectedItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

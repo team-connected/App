@@ -10,5 +10,6 @@ namespace VoiceRecognitionUMC.Model
         public string MetricValue { get; set; }
         public string NurseName { get; set; }
         public string Device { get; set; }
+        public string ID { get; set; }
     }
 }

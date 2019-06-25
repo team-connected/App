@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VoiceRecognitionUMC.Views.EditMetric">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Text="{Binding NurseName}" Grid.Column="0" Grid.Row="0"/>
+                <Label Text="{Binding DeviceName}" Grid.Column="1" Grid.Row="0"/>
+                <Label Text="{Binding MetricType}" Grid.Column="0" Grid.Row="1"/>
+                <Entry Text="{Binding MetricValue}" Grid.Column="1" Grid.Row="1"/>
+            </Grid>
+            <Button Text="Opslaan" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Command="{Binding SaveCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
