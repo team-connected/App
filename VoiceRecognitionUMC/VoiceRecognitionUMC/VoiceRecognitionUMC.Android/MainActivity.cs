@@ -10,7 +10,6 @@ using Android.Nfc;
 using Android.Content;
 using Poz1.NFCForms.Droid;
 using Poz1.NFCForms.Abstract;
-using Android.Content;
 using Android.Speech;
 using Xamarin.Forms;
 
@@ -28,9 +27,7 @@ namespace VoiceRecognitionUMC.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-                      
 
-            base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             NfcManager NfcManager = (NfcManager)Android.App.Application.Context.GetSystemService(Context.NfcService);
@@ -39,7 +36,30 @@ namespace VoiceRecognitionUMC.Droid
             Xamarin.Forms.DependencyService.Register<INfcForms, NfcForms>();
             x = Xamarin.Forms.DependencyService.Get<INfcForms>() as NfcForms;
 
+            base.OnCreate(savedInstanceState);
+            
             LoadApplication(new App());
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if (requestCode == VOICE)
+            {
+                if (resultCode == Result.Ok)
+                {
+                    var matches = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
+                    if (matches.Count != 0)
+                    {
+                        string textInput = matches[0];
+                        MessagingCenter.Send<IMessageSender, string>(this, "STT", textInput);
+                    }
+                    else
+                    {
+                        MessagingCenter.Send<IMessageSender, string>(this, "STT", "No Input");
+                    }
+                }
+            }
+            base.OnActivityResult(requestCode, resultCode, data);
         }
 
         protected override void OnResume()
@@ -76,25 +96,6 @@ namespace VoiceRecognitionUMC.Droid
             x.OnNewIntent(this, intent);
         }
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            if (requestCode == VOICE)
-            {
-                if (resultCode == Result.Ok)
-                {
-                    var matches = data.GetStringArrayListExtra(RecognizerIntent.ExtraResults);
-                    if (matches.Count != 0)
-                    {
-                        string textInput = matches[0];
-                        MessagingCenter.Send<IMessageSender, string>(this, "STT", textInput);
-                    }
-                    else
-                    {
-                        MessagingCenter.Send<IMessageSender, string>(this, "STT", "No Input");
-                    }
-                }
-            }
-            base.OnActivityResult(requestCode, resultCode, data);
-        }
+
     }
 }

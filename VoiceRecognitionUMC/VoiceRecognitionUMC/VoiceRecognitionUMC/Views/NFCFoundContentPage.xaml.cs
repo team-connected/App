@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace VoiceRecognitionUMC.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NFCIdReader : ContentPage
+    public partial class NFCFoundContentPage : ContentPage
     {
-        public NFCIdReader()
+        public NFCFoundContentPage()
         {
             InitializeComponent();
         }
