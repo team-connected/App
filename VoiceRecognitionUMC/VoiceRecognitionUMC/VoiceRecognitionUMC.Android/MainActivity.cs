@@ -79,6 +79,10 @@ namespace VoiceRecognitionUMC.Droid
                         new string[] {
                             NFCTechs.MifareClassic,
                         },
+                        new string[]
+                        {
+                            NFCTechs.IsoDep
+                        },
                     }
                 );
             }

@@ -5,10 +5,7 @@
              BackgroundColor="#3C6EB7">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Scan nu de NFC tag!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="Center"
-                TextColor="#FFFFFF"/>
+            <Label Text="{Binding NFCText}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
