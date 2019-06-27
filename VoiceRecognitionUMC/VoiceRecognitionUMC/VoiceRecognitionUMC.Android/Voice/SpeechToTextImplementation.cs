@@ -46,9 +46,9 @@ namespace VoiceRecognitionUMC.Droid.Voice
 
                 voiceIntent.PutExtra(RecognizerIntent.ExtraPrompt, "Spreek Nu");
 
-                voiceIntent.PutExtra(RecognizerIntent.ExtraSpeechInputCompleteSilenceLengthMillis, 15000);
-                voiceIntent.PutExtra(RecognizerIntent.ExtraSpeechInputPossiblyCompleteSilenceLengthMillis, 15000);
-                voiceIntent.PutExtra(RecognizerIntent.ExtraSpeechInputMinimumLengthMillis, 15000);
+                voiceIntent.PutExtra(RecognizerIntent.ExtraSpeechInputCompleteSilenceLengthMillis, 1500);
+                voiceIntent.PutExtra(RecognizerIntent.ExtraSpeechInputPossiblyCompleteSilenceLengthMillis, 1500);
+                voiceIntent.PutExtra(RecognizerIntent.ExtraSpeechInputMinimumLengthMillis, 1500);
                 voiceIntent.PutExtra(RecognizerIntent.ExtraMaxResults, 1);
                 voiceIntent.PutExtra(RecognizerIntent.ExtraLanguage, Java.Util.Locale.Default);
                 voiceIntent.PutExtra(RecognizerIntent.ExtraResults, 100000);
