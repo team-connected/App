@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="VoiceRecognitionUMC.Views.NfcReadDeviceTagPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding DeviceListItems}" RowHeight="70">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="Naam" Grid.Column="0" Grid.Row="0"/>
+                                <Label Text="Soort" Grid.Column="0" Grid.Row="1"/>
+                                <Label Text="Serienummer" Grid.Column="0" Grid.Row="2"/>
+                                <Label Text="{Binding DeviceName}" Grid.Column="1" Grid.Row="0"/>
+                                <Label Text="{Binding DeviceType}" Grid.Column="1" Grid.Row="1"/>
+                                <Label Text="{Binding SerialNumber}" Grid.Column="1" Grid.Row="2"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
