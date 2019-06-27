@@ -11,20 +11,21 @@ namespace VoiceRecognitionUMC.ViewModels
     class NfcReadPatientTagViewModel : BaseViewModel
     {
         private readonly INfcForms device;
-        private string patientNaam;
         private IPatientService patientService;
+        private INavigationService _navigationService;
+        private string tagFound;
 
-        public string PatientNaam
+        public string TagFound
         {
-            get { return this.patientNaam; }
-            set { SetProperty(ref this.patientNaam, value); }
+            get { return this.tagFound; }
+            set { SetProperty(ref this.tagFound, value); }
         }
 
         public NfcReadPatientTagViewModel(INavigationService navigationService) : base(navigationService)
         {
             device = DependencyService.Get<INfcForms>();
             patientService = new PatientService();
-
+            _navigationService = navigationService;
             device.NewTag += ReadTag;
         }
 
@@ -35,11 +36,22 @@ namespace VoiceRecognitionUMC.ViewModels
             LookUpPatient(nfcText);
         }
 
-        void LookUpPatient(string nfcText)
+        async void LookUpPatient(string nfcText)
         {
             try
             {
-                var foundPatient = await patientService.RefreshPatients            }
+                TagFound = "Halsband gescand. Een moment aub...";
+
+                var foundPatient = await patientService.GetPatient(nfcText);
+                var patientName = $"{foundPatient.Firstname} {foundPatient.Lastname}";
+
+                var navigationParameters = new NavigationParameters
+                {
+                    {"patientFullName", patientName }
+                };
+
+                await _navigationService.NavigateAsync("../NfcReadPatientTagResultPage", navigationParameters);
+            }
             catch (NullReferenceException ex)
             {
                 Console.WriteLine(ex.Message);

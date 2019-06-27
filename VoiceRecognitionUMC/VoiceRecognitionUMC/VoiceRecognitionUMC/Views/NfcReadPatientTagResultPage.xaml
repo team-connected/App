@@ -4,22 +4,21 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="VoiceRecognitionUMC.Views.NfcReadPatientTagPage"
+             x:Class="VoiceRecognitionUMC.Views.NfcReadPatientTagResultPage"
              BackgroundColor="#3C6EB7">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout>
-                <Label Text="Scan de halsband van de patient"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                   FontSize="Large"
-                   TextColor="White"/>
-                <Label Text="{Binding TagFound}"
+            <Label Text="U heeft tag van de volgende patient gescand"
+                   TextColor="White"></Label>
+            <Label Text="{Binding PatientName}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" 
                 FontSize="Large"
                 TextColor="White"/>
-            </StackLayout>
+            <Label Text="Klopt dit?"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                TextColor="White"></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

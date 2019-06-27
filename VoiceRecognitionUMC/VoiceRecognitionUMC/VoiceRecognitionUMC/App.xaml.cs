@@ -26,7 +26,7 @@ namespace VoiceRecognitionUMC
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/NfcReadNurseTagPage");
+            await NavigationService.NavigateAsync("NavigationPage/NfcReadPatientTagPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -35,14 +35,12 @@ namespace VoiceRecognitionUMC
             containerRegistry.RegisterForNavigation<Login, LoginViewModel>();
             containerRegistry.RegisterForNavigation<VoiceRecognition, VoiceRecognitionViewModel>();
             containerRegistry.RegisterForNavigation<MetricResult, MetricResultViewModel>();
-<<<<<<< HEAD
             containerRegistry.RegisterForNavigation<NFCHandler, NfcHandlerViewModel>();
             containerRegistry.RegisterForNavigation<NfcReadDeviceTagPage, NfcReadDeviceTagViewModel>();
             containerRegistry.RegisterForNavigation<NfcReadNurseTagPage, NfcReadNurseTagViewModel>();
             containerRegistry.RegisterForNavigation<NfcReadPatientTagPage, NfcReadPatientTagViewModel>();
-=======
+            containerRegistry.RegisterForNavigation<NfcReadPatientTagResultPage, NfcReadPatientTagResultViewModel>();
             containerRegistry.RegisterForNavigation<EditMetric, EditMetricViewmodel>();
->>>>>>> origin/master
         }
 
         protected override void OnStart()
