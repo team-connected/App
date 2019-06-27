@@ -87,5 +87,27 @@ namespace VoiceRecognitionUMC.Persistence
 
             return metric[0];
         }
+
+        public async void UpdateMetric(string metricId, Object newValue)
+        {
+            var uri = new Uri($"http://umc-api.maartenmol.nl:5000/api/v1/metric/id={metricId}");
+
+            try
+            {
+                var json = JsonConvert.SerializeObject(newValue);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _client.PutAsync(uri, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Metric succesvol opgeslagen");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
     }
 }

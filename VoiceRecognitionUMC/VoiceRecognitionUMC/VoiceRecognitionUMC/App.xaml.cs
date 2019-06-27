@@ -6,12 +6,18 @@ using Prism.Unity;
 using Prism.Ioc;
 using VoiceRecognitionUMC.Views;
 using VoiceRecognitionUMC.ViewModels;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace VoiceRecognitionUMC
 {
     public partial class App : PrismApplication
     {
+        public static readonly IList<string> voiceRecognitionKeyWords = new ReadOnlyCollection<string>(new List<string>
+        {
+            "registreer", "registreren", "registreert"
+        });
         public App() : this(null) { }
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
@@ -29,10 +35,14 @@ namespace VoiceRecognitionUMC
             containerRegistry.RegisterForNavigation<Login, LoginViewModel>();
             containerRegistry.RegisterForNavigation<VoiceRecognition, VoiceRecognitionViewModel>();
             containerRegistry.RegisterForNavigation<MetricResult, MetricResultViewModel>();
+<<<<<<< HEAD
             containerRegistry.RegisterForNavigation<NFCHandler, NfcHandlerViewModel>();
             containerRegistry.RegisterForNavigation<NfcReadDeviceTagPage, NfcReadDeviceTagViewModel>();
             containerRegistry.RegisterForNavigation<NfcReadNurseTagPage, NfcReadNurseTagViewModel>();
             containerRegistry.RegisterForNavigation<NfcReadPatientTagPage, NfcReadPatientTagViewModel>();
+=======
+            containerRegistry.RegisterForNavigation<EditMetric, EditMetricViewmodel>();
+>>>>>>> origin/master
         }
 
         protected override void OnStart()

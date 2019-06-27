@@ -8,7 +8,7 @@
         <StackLayout Spacing="15" HorizontalOptions="Fill">
             <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                 <Image Source="utrecht.png" WidthRequest="150" HeightRequest="150" Margin="0"/>
-                <Entry x:Name="Entry_First" Placeholder="Gebruikersnaam" Margin="0" TextColor="White" PlaceholderColor="White" WidthRequest="250"/>
+                <Entry x:Name="Entry_First" Placeholder="Gebruikersnaam" Margin="0" TextColor="White" PlaceholderColor="White" WidthRequest="250" Text="{Binding Username, Mode=OneWayToSource}"/>
                 <Entry x:Name="Entry_Second" Placeholder="Wachtwoord" Margin="0" TextColor="White" PlaceholderColor="White" WidthRequest="250"/>
                 <Button x:Name="Login_Button" Command="{Binding LoginCommand}" BackgroundColor="LightGray" Text="Login" TextColor="Black" WidthRequest="40" HeightRequest="40" BorderRadius="20"  Margin="5"/>
             </StackLayout>

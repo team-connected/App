@@ -18,6 +18,7 @@ namespace VoiceRecognitionUMC.ViewModels
         private INavigationService _navigationService;
         private IMetricService _metricService;
         private List<string> metrics;
+        private string userId;
         #endregion
 
         #region COMMANDS
@@ -35,6 +36,9 @@ namespace VoiceRecognitionUMC.ViewModels
             _navigationService = navigationService;
             _metricService = new MetricService();
             metrics = new List<string>();
+
+            DateTime now = DateTime.Now;
+            Console.WriteLine(now.ToString("yyyy/MM/dd HH:mm:ss"));
 
             try
             {
@@ -58,33 +62,41 @@ namespace VoiceRecognitionUMC.ViewModels
             {
                 SpeechToTextFinalResultReceived(args);
             });
-
-            StartListening();
         }
         #endregion
 
         #region FUNCTIONS
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            this.userId = parameters.GetValue<string>("userId");
+            
+            StartListening();
+        }
+
         private void SpeechToTextFinalResultReceived(string args)
         {
-            if (args.ToLower().Contains("registreer"))
+            foreach (string keyWord in App.voiceRecognitionKeyWords)
             {
-                string reworkedString = args.Substring(args.ToLower().IndexOf("registreer"));
-                string[] splittedVoiceText = Regex.Split(reworkedString, "registreer");
-
-                foreach (string line in splittedVoiceText)
+                if (args.ToLower().Contains(keyWord))
                 {
-                    string metricLine = "registreer" + line;
-                    if (metricLine != "registreer")
+                    string reworkedString = args.Substring(args.ToLower().IndexOf(keyWord));
+                    string[] splittedVoiceText = Regex.Split(reworkedString, keyWord);
+
+                    foreach (string line in splittedVoiceText)
                     {
-                        metrics.Add(metricLine);
+                        if (line != "")
+                        {
+                            metrics.Add(line);
+                        }
+                    }
+
+                    foreach (string s in metrics)
+                    {
+                        Console.WriteLine(s);
                     }
                 }
-
-                foreach (string s in metrics)
-                {
-                    Console.WriteLine(s);
-                }
             }
+            
 
             StartListening();
         }
@@ -131,24 +143,26 @@ namespace VoiceRecognitionUMC.ViewModels
 
         private async void FinishMetric()
         {
+            DateTime now = DateTime.Now;
+            Console.WriteLine(now.ToString("yyyy/MM/dd HH:mm:ss"));
             MetricCreate newMetric = new MetricCreate
             {
-                device_id = "1391109f9910481c933970c5db966358",
+                device_bloeddruk = "1391109f9910481c933970c5db966358",
+                device_gewicht = "h8vh16kgcdh9w26gj5tjfic94m2p4bfy",
+                device_temperatuur = "y363fqujy6vlpzqtxan4ivkf98gi99ey",
                 metric_type = "",
-                nurse_id = "nv7sg3vrxrwr8y8vugamdztxzrhwemhj",
-                timestamp = DateTime.Now,
+                nurse_id = userId,
+                timestamp = now.ToString("yyyy/MM/dd HH:mm:ss"),
                 comment = "Voice Test"
             };
 
-            var metricResponse = await _metricService.CreateMetric(newMetric, "43smekrqprd5ptjt1z5pwb9nxliz81nu");
+            var metricResponse = await _metricService.CreateMetric(newMetric, "95zkai0z3whyraaigs7k0wh1g15yb64s");
 
             foreach (string metric in metrics)
             {
                 Metric updateMetric = new Metric
                 {
                     raw_text = metric,
-                    patient_id = "43smekrqprd5ptjt1z5pwb9nxliz81nu",
-                    nurse_id = "nv7sg3vrxrwr8y8vugamdztxzrhwemhj",
                     metric_id = metricResponse.createMetric
                 };
 
@@ -157,7 +171,8 @@ namespace VoiceRecognitionUMC.ViewModels
 
             var navigationParams = new NavigationParameters
             {
-                { "metricId", metricResponse.createMetric }
+                { "metricId", metricResponse.createMetric },
+                {"patientId",  "95zkai0z3whyraaigs7k0wh1g15yb64s"}
             };
 
             await _navigationService.NavigateAsync("../MetricResult", navigationParams);
