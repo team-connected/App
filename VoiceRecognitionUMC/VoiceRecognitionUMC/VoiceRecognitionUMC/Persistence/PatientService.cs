@@ -20,11 +20,11 @@ namespace VoiceRecognitionUMC.Persistence
             _client = new HttpClient();
         }
 
-        public async Task<List<Patient>> RefreshPatients()
+        public async Task<Patient> GetPatient(string patientId)
         {
             Patients = new List<Patient>();
 
-            var uri = new Uri("http://145.89.207.78:5000/api/v1/patient");
+            var uri = new Uri($"http://umc-api.maartenmol.nl:5000/api/v1/patient/_id={patientId}");
 
             try
             {
@@ -40,7 +40,7 @@ namespace VoiceRecognitionUMC.Persistence
                 Debug.WriteLine(ex.Message);
             }
 
-            return Patients;
+            return Patients[0];
         }
     }
 }

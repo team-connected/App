@@ -8,6 +8,6 @@ namespace VoiceRecognitionUMC.Persistence
 {
     interface IPatientService
     {
-        Task<List<Patient>> RefreshPatients();
+        Task<Patient> GetPatient(string patientId);
     }
 }

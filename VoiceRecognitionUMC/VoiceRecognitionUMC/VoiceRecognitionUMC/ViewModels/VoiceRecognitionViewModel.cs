@@ -75,25 +75,28 @@ namespace VoiceRecognitionUMC.ViewModels
 
         private void SpeechToTextFinalResultReceived(string args)
         {
-            if (args.ToLower().Contains("registreer"))
+            foreach (string keyWord in App.voiceRecognitionKeyWords)
             {
-                string reworkedString = args.Substring(args.ToLower().IndexOf("registreer"));
-                string[] splittedVoiceText = Regex.Split(reworkedString, "registreer");
-
-                foreach (string line in splittedVoiceText)
+                if (args.ToLower().Contains(keyWord))
                 {
-                    string metricLine = "registreer" + line;
-                    if (metricLine != "registreer")
+                    string reworkedString = args.Substring(args.ToLower().IndexOf(keyWord));
+                    string[] splittedVoiceText = Regex.Split(reworkedString, keyWord);
+
+                    foreach (string line in splittedVoiceText)
                     {
-                        metrics.Add(metricLine);
+                        if (line != "")
+                        {
+                            metrics.Add(line);
+                        }
+                    }
+
+                    foreach (string s in metrics)
+                    {
+                        Console.WriteLine(s);
                     }
                 }
-
-                foreach (string s in metrics)
-                {
-                    Console.WriteLine(s);
-                }
             }
+            
 
             StartListening();
         }
@@ -168,7 +171,8 @@ namespace VoiceRecognitionUMC.ViewModels
 
             var navigationParams = new NavigationParameters
             {
-                { "metricId", metricResponse.createMetric }
+                { "metricId", metricResponse.createMetric },
+                {"patientId",  "95zkai0z3whyraaigs7k0wh1g15yb64s"}
             };
 
             await _navigationService.NavigateAsync("../MetricResult", navigationParams);

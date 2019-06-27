@@ -2,27 +2,42 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VoiceRecognitionUMC.Views.MetricResult"
-             Title="Resultaat">
+             Title="Resultaat"
+             BackgroundColor="#3C6EB7">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="tick.png" Command="{Binding SaveCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding Metrics}" SelectedItem="{Binding SelectedItem}">
+            <ListView ItemsSource="{Binding Metrics}" SelectedItem="{Binding SelectedItem}" HasUnevenRows="True" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Label Text="{Binding NurseName}" Grid.Column="0" Grid.Row="0"/>
-                                <Label Text="{Binding Device}" Grid.Column="1" Grid.Row="0"/>
-                                <Label Text="{Binding MetricType}" Grid.Column="0" Grid.Row="1"/>
-                                <Label Text="{Binding MetricValue}" Grid.Column="1" Grid.Row="1"/>
-                            </Grid>
+                            <Frame Padding="2" Margin="0,5,0,5" HeightRequest="200">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="nurse.png" HeightRequest="50" WidthRequest="50" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding NurseName}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Small"/>
+                                    <Image Source="device.png" HeightRequest="50" WidthRequest="50" Grid.Column="2" Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                                    <Label Text="{Binding Device}" Grid.Column="3" Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Small"/>
+                                    <Image Source="patient.png" Grid.Column="0" Grid.Row="1" HeightRequest="50" WidthRequest="50" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding PatientName}" Grid.Column="1" Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Small"/>
+                                    <Image Source="Report.png" HeightRequest="50" WidthRequest="50" Grid.Column="2" Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding MetricType}" Grid.Column="3" Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Small"/>
+                                    <Image Source="Report.png" HeightRequest="50" WidthRequest="50" Grid.Column="0" Grid.Row="2" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding MetricValue}" Grid.Column="1" Grid.Row="2" FontSize="Small" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                                </Grid>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

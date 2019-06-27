@@ -4,8 +4,8 @@ using System.Text;
 
 namespace VoiceRecognitionUMC.Model
 {
-    class UpdateBlooddruk
+    class UpdateBloeddruk
     {
-        public string blooddruk { get; set; }
+        public string bloeddruk { get; set; }
     }
 }

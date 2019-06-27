@@ -20,7 +20,13 @@ namespace VoiceRecognitionUMC.ViewModels
         private GetMetric metric;
         private MetricListItem selectedItem;
         private INavigationService _navigationService;
+        private string patientId;
+        private IPatientService _patientService;
         #endregion|
+
+        #region COMMMANDS
+        public DelegateCommand SaveCommand { get; private set; }
+        #endregion
 
         #region PROPERTIES
         public ObservableCollection<MetricListItem> Metrics
@@ -49,6 +55,9 @@ namespace VoiceRecognitionUMC.ViewModels
             _metricService = new MetricService();
             _nurseService = new NurseService();
             _deviceService = new DeviceService();
+            _patientService = new PatientService();
+
+            SaveCommand = new DelegateCommand(Save);
         }
         #endregion
 
@@ -58,6 +67,7 @@ namespace VoiceRecognitionUMC.ViewModels
             if (parameters.ContainsKey("metricId"))
             {
                 metricId = parameters.GetValue<string>("metricId");
+                patientId = parameters.GetValue<string>("patientId");
             }
             FillList();
         }
@@ -67,6 +77,7 @@ namespace VoiceRecognitionUMC.ViewModels
             Metrics = new ObservableCollection<MetricListItem>();
             metric = await _metricService.GetMetric(metricId);
             var nurse = await _nurseService.GetNurseAsync(metric.nurse_id);
+            var patient = await _patientService.GetPatient(patientId);
 
             if (metric.bloeddruk != "0")
             {
@@ -79,7 +90,8 @@ namespace VoiceRecognitionUMC.ViewModels
                     MetricValue = metric.bloeddruk,
                     NurseName = $"{nurse.firstname} {nurse.lastname}",
                     Device = deviceName.name,
-                    ID = metric._id
+                    ID = metric._id,
+                    PatientName = $"{patient.Firstname} {patient.Lastname}"
                 };
 
                 Metrics.Add(listItem);
@@ -93,7 +105,8 @@ namespace VoiceRecognitionUMC.ViewModels
                     MetricValue = metric.gewicht,
                     NurseName = $"{nurse.firstname} {nurse.lastname}",
                     Device = deviceName.name,
-                    ID = metric._id
+                    ID = metric._id,
+                    PatientName = $"{patient.Firstname} {patient.Lastname}"
                 };
 
                 Metrics.Add(listItem);
@@ -108,7 +121,8 @@ namespace VoiceRecognitionUMC.ViewModels
                     MetricValue = metric.temperatuur,
                     NurseName = $"{nurse.firstname} {nurse.lastname}",
                     Device = deviceName.name,
-                    ID = metric._id
+                    ID = metric._id,
+                    PatientName = $"{patient.Firstname} {patient.Lastname}"
                 };
 
                 Metrics.Add(listItem);
@@ -121,10 +135,16 @@ namespace VoiceRecognitionUMC.ViewModels
 
             var navigationParameters = new NavigationParameters
             {
-                {"metric", metric }
+                {"metric", metric },
+                {"patientId", patientId }
             };
 
             _navigationService.NavigateAsync("EditMetric", navigationParameters);
+        }
+
+        public void Save()
+        {
+            _navigationService.NavigateAsync("../Login");
         }
         #endregion
     }

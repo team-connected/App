@@ -15,10 +15,12 @@ namespace VoiceRecognitionUMC.ViewModels
         private string deviceName;
         private string metricType;
         private string metricValue;
+        private string patientName;
         private INavigationService _navigationService;
         private MetricListItem metric;
         private GetMetric updatedMetric;
         private IMetricService _metricService;
+        private string patientId;
         #endregion
 
         #region COMMANDS
@@ -46,6 +48,11 @@ namespace VoiceRecognitionUMC.ViewModels
             get { return this.metricValue; }
             set { SetProperty(ref this.metricValue, value); }
         }
+        public string PatientName
+        {
+            get { return this.patientName; }
+            set { SetProperty(ref this.patientName, value); }
+        }
         #endregion
 
         #region CONSTRUCTOR
@@ -62,6 +69,7 @@ namespace VoiceRecognitionUMC.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             metric = parameters.GetValue<MetricListItem>("metric");
+            patientId = parameters.GetValue<string>("patientId");
             FillLabels();
         }
 
@@ -71,6 +79,7 @@ namespace VoiceRecognitionUMC.ViewModels
             DeviceName = metric.Device;
             MetricType = metric.MetricType;
             MetricValue = metric.MetricValue;
+            PatientName = metric.PatientName;
 
             updatedMetric = await _metricService.GetMetric(metric.ID);
         }
@@ -80,9 +89,9 @@ namespace VoiceRecognitionUMC.ViewModels
             Object updatedMetric = null;
             if (metric.MetricType.ToLower() == "bloeddruk")
             {
-                updatedMetric = new UpdateBlooddruk
+                updatedMetric = new UpdateBloeddruk
                 {
-                    blooddruk = MetricValue
+                    bloeddruk = MetricValue
                 };
 
             }
@@ -104,10 +113,11 @@ namespace VoiceRecognitionUMC.ViewModels
             _metricService.UpdateMetric(metric.ID, updatedMetric);
             var navigationParameters = new NavigationParameters
             {
-                {"metricId", metric.ID }
+                {"metricId", metric.ID },
+                {"patientId", patientId }
             };
 
-            _navigationService.NavigateAsync("../MetricResult", navigationParameters);
+            _navigationService.NavigateAsync("../../MetricResult", navigationParameters);
         }
         #endregion
     }
