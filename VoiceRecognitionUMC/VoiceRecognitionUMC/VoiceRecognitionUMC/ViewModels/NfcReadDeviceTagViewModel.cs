@@ -30,7 +30,7 @@ namespace VoiceRecognitionUMC.ViewModels
         public NfcReadDeviceTagViewModel(INavigationService navigationService) : base(navigationService)
         {
             deviceListItems = new ObservableCollection<DeviceListItem>();
-            _navigationService = navigationService;
+            
             deviceService = new DeviceService();
             NfcDevice = DependencyService.Get<INfcForms>();
 
