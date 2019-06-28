@@ -22,6 +22,7 @@ namespace VoiceRecognitionUMC.ViewModels
         private INavigationService _navigationService;
         private string patientId;
         private IPatientService _patientService;
+        private string nurseName;
         #endregion|
 
         #region COMMMANDS
@@ -45,6 +46,11 @@ namespace VoiceRecognitionUMC.ViewModels
                     ItemSelected();
                 }
             }
+        }
+        public string NurseName
+        {
+            get { return this.nurseName; }
+            set { SetProperty(ref this.nurseName, value); }
         }
         #endregion
     
@@ -79,6 +85,8 @@ namespace VoiceRecognitionUMC.ViewModels
             var nurse = await _nurseService.GetNurseAsync(metric.nurse_id);
             var patient = await _patientService.GetPatient(patientId);
 
+            NurseName = $"Ingelogd als: {nurse.firstname} {nurse.lastname}";
+
             if (metric.bloeddruk != "0")
             {
 
@@ -87,9 +95,9 @@ namespace VoiceRecognitionUMC.ViewModels
                 var listItem = new MetricListItem
                 {
                     MetricType = "Bloeddruk",
-                    MetricValue = metric.bloeddruk,
-                    NurseName = $"{nurse.firstname} {nurse.lastname}",
+                    MetricValue = $"{metric.bloeddruk} mmHg",
                     Device = deviceName.name,
+                    NurseName = $"{nurse.firstname} {nurse.lastname}",
                     ID = metric._id,
                     PatientName = $"{patient.Firstname} {patient.Lastname}"
                 };
@@ -102,9 +110,9 @@ namespace VoiceRecognitionUMC.ViewModels
                 var listItem = new MetricListItem
                 {
                     MetricType = "Gewicht",
-                    MetricValue = metric.gewicht,
-                    NurseName = $"{nurse.firstname} {nurse.lastname}",
+                    MetricValue = $"{metric.gewicht} kg",
                     Device = deviceName.name,
+                    NurseName = $"{nurse.firstname} {nurse.lastname}",
                     ID = metric._id,
                     PatientName = $"{patient.Firstname} {patient.Lastname}"
                 };
@@ -118,9 +126,9 @@ namespace VoiceRecognitionUMC.ViewModels
                 var listItem = new MetricListItem
                 {
                     MetricType = "Temperatuur",
-                    MetricValue = metric.temperatuur,
-                    NurseName = $"{nurse.firstname} {nurse.lastname}",
+                    MetricValue = $"{metric.temperatuur} °C",
                     Device = deviceName.name,
+                    NurseName = $"{nurse.firstname} {nurse.lastname}",
                     ID = metric._id,
                     PatientName = $"{patient.Firstname} {patient.Lastname}"
                 };
