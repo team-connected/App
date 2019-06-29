@@ -156,6 +156,8 @@ namespace VoiceRecognitionUMC.ViewModels
                 comment = "Voice Test"
             };
 
+            UserDialogs.Instance.ShowLoading("Opslaan");
+
             var metricResponse = await _metricService.CreateMetric(newMetric, "95zkai0z3whyraaigs7k0wh1g15yb64s");
 
             foreach (string metric in metrics)
@@ -175,6 +177,7 @@ namespace VoiceRecognitionUMC.ViewModels
                 {"patientId",  "95zkai0z3whyraaigs7k0wh1g15yb64s"}
             };
 
+            UserDialogs.Instance.HideLoading();
             await _navigationService.NavigateAsync("../MetricResult", navigationParams);
         }
         #endregion
