@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Content;
 using Android.Speech;
 using Xamarin.Forms;
+using Acr.UserDialogs;
 
 namespace VoiceRecognitionUMC.Droid
 {
@@ -16,9 +17,12 @@ namespace VoiceRecognitionUMC.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IMessageSender
     {
         private readonly int VOICE = 10;
+        internal static MainActivity Instance { get; private set; }
         
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            Instance = this;
+            UserDialogs.Init(this);
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
                       

@@ -8,6 +8,7 @@ using VoiceRecognitionUMC.Model;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Acr.UserDialogs;
+using System.Linq;
 
 namespace VoiceRecognitionUMC.ViewModels
 {
@@ -69,34 +70,134 @@ namespace VoiceRecognitionUMC.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             this.userId = parameters.GetValue<string>("userId");
-            
+
+            Speak("U kunt beginnen met de meting");
+
             StartListening();
         }
 
         private void SpeechToTextFinalResultReceived(string args)
         {
+            if (App.voiceRecognitionStopWords.Any(w => args.ToLower().Contains(w)))
+            {
+                GetUserAgreement();
+            }
+            else if (App.voiceRecogntionAcceptWords.Any(w => args.ToLower().Contains(w)))
+            {
+                FinishMetric();
+            }
+            else if (App.voiceRecogntionCancelWords.Any(w => args.ToLower().Contains(w)))
+            {
+                CancelFinishMetric();
+            }
+            else if (App.metricNumber.Any(w => args.ToLower().Contains(w)))
+            {
+                if (args.ToLower().Contains("een") || args.ToLower().Contains("1"))
+                {
+                    RemoveAndRestartMetric(1);
+                }
+                if (args.ToLower().Contains("twee") || args.ToLower().Contains("2"))
+                {
+                    RemoveAndRestartMetric(2);
+                }
+                if (args.ToLower().Contains("drie") || args.ToLower().Contains("3"))
+                {
+                    RemoveAndRestartMetric(3);
+                }
+                
+            }
+            else
+            {
+                GetMetricsFromSpokenText(args);
+            }
+        }
+
+        private void GetUserAgreement()
+        {
+            Speak("Ik heb de volgende metingen gehoord");
+            System.Threading.Thread.Sleep(2000);
+            foreach (string metric in metrics)
+            {
+                Speak(metric);
+                System.Threading.Thread.Sleep(3000);
+            }
+            Speak("Is dit correct en meting afronden?");
+            System.Threading.Thread.Sleep(2000);
+
+            StartListening();
+        }
+
+        private void CancelFinishMetric()
+        {
+            Speak("Spreek alstublieft het nummer van de foutieve meting of spreek een nieuwe meting in");
+            System.Threading.Thread.Sleep(4000);
+
+            StartListening();
+        }
+
+        private void RemoveAndRestartMetric(int number)
+        {
+            try
+            {
+                metrics.RemoveAt(number - 1);
+            }
+            catch { }
+            
+            System.Threading.Thread.Sleep(1000);
+            Speak("Spreek de meting opnieuw");
+
+            StartListening();
+        } 
+
+        private void GetMetricsFromSpokenText(string spokenText)
+        {
             foreach (string keyWord in App.voiceRecognitionKeyWords)
             {
-                if (args.ToLower().Contains(keyWord))
+                if (spokenText.ToLower().Contains(keyWord))
                 {
-                    string reworkedString = args.Substring(args.ToLower().IndexOf(keyWord));
+                    string reworkedString = spokenText.Substring(spokenText.ToLower().IndexOf(keyWord));
                     string[] splittedVoiceText = Regex.Split(reworkedString, keyWord);
 
                     foreach (string line in splittedVoiceText)
                     {
-                        if (line != "")
+                        string newLine;
+                        try
                         {
-                            metrics.Add(line);
+                            if (line.Contains("temperatuur"))
+                            {
+                                string toBeSearched = "is    graden";
+                                newLine = string.Format("{0}", line.Remove(line.IndexOf("is") + toBeSearched.Length));
+                                metrics.Add(newLine);
+                            }
+                            if (line.Contains("bloeddruk"))
+                            {
+                                string toBeSearched = "is     over   ";
+                                newLine = string.Format("{0}", line.Remove(line.IndexOf("is") + toBeSearched.Length));
+                                metrics.Add(newLine);
+                            }
+                            if (line.Contains("gewicht") && line.Contains("kg"))
+                            {
+                                string toBeSearched = "is    kg";
+                                newLine = string.Format("{0}", line.Remove(line.IndexOf("is") + toBeSearched.Length));
+                                metrics.Add(newLine);
+                            }
+                            if (line.Contains("gewicht") && line.Contains("kilo"))
+                            {
+                                string toBeSearched = "is    kilo";
+                                newLine = string.Format("{0}", line.Remove(line.IndexOf("is") + toBeSearched.Length));
+                                metrics.Add(newLine);
+                            }
                         }
-                    }
-
-                    foreach (string s in metrics)
-                    {
-                        Console.WriteLine(s);
+                        catch
+                        {
+                            if (line != "")
+                            {
+                                metrics.Add(line);
+                            }
+                        }
                     }
                 }
             }
-            
 
             StartListening();
         }
@@ -144,7 +245,6 @@ namespace VoiceRecognitionUMC.ViewModels
         private async void FinishMetric()
         {
             DateTime now = DateTime.Now;
-            Console.WriteLine(now.ToString("yyyy/MM/dd HH:mm:ss"));
             MetricCreate newMetric = new MetricCreate
             {
                 device_bloeddruk = "1391109f9910481c933970c5db966358",
@@ -156,6 +256,7 @@ namespace VoiceRecognitionUMC.ViewModels
                 comment = "Voice Test"
             };
 
+            UserDialogs.Instance.ShowLoading("Opslaan");
             var metricResponse = await _metricService.CreateMetric(newMetric, "95zkai0z3whyraaigs7k0wh1g15yb64s");
 
             foreach (string metric in metrics)
@@ -175,7 +276,14 @@ namespace VoiceRecognitionUMC.ViewModels
                 {"patientId",  "95zkai0z3whyraaigs7k0wh1g15yb64s"}
             };
 
+            UserDialogs.Instance.HideLoading();
+
             await _navigationService.NavigateAsync("../MetricResult", navigationParams);
+        }
+
+        private void Speak(string textToSpeak)
+        {
+            DependencyService.Get<ITextToSpeech>().Speak(textToSpeak);
         }
         #endregion
     }

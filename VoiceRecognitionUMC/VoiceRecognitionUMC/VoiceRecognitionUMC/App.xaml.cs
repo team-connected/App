@@ -18,6 +18,27 @@ namespace VoiceRecognitionUMC
         {
             "registreer", "registreren", "registreert"
         });
+
+        public static readonly IList<string> voiceRecognitionStopWords = new ReadOnlyCollection<string>(new List<string>
+        {
+            "stop", " stop meting"
+        });
+
+        public static readonly IList<string> voiceRecogntionAcceptWords = new ReadOnlyCollection<string>(new List<string>
+        {
+            "ja"
+        });
+
+        public static readonly IList<string> voiceRecogntionCancelWords = new ReadOnlyCollection<string>(new List<string>
+        {
+            "nee"
+        });
+
+        public static readonly IList<string> metricNumber = new ReadOnlyCollection<string>(new List<string>
+        {
+            "meting 1", "meting een", "meting 2", "meting twee", "meting 3", "meting drie"
+        });
+
         public App() : this(null) { }
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
