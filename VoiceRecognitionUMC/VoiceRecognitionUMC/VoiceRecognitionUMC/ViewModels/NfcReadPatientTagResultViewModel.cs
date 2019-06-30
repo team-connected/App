@@ -1,8 +1,11 @@
-﻿using Prism.Navigation;
+﻿using Prism.Commands;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
+using VoiceRecognitionUMC.Model;
 
 namespace VoiceRecognitionUMC.ViewModels
 {
@@ -10,6 +13,12 @@ namespace VoiceRecognitionUMC.ViewModels
     {
         private INavigationService _navigationService;
         private string patientName;
+        private string email;
+        private string address;
+        private Patient scannedPatient;
+
+        public DelegateCommand GoBackCommand { get; private set; }
+        public DelegateCommand ProceedToNextPageCommand { get; private set; }
 
         public string PatientName
         {
@@ -17,18 +26,44 @@ namespace VoiceRecognitionUMC.ViewModels
             set { SetProperty(ref this.patientName, value); }
         }
 
+        public string Email
+        {
+            get { return this.email; }
+            set { SetProperty(ref this.email, value); }
+        }
+        public string Address
+        {
+            get { return this.address; }
+            set { SetProperty(ref this.address, value); }
+        }
+
         public NfcReadPatientTagResultViewModel(INavigationService navigationService) : base(navigationService)
         {
             _navigationService = navigationService;
+            ProceedToNextPageCommand = new DelegateCommand(GoToVoiceRecognitionPage);
+            GoBackCommand = new DelegateCommand(ReturnToPreviousPage);
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey("patientFullName"))
+            if (parameters.ContainsKey("patient"))
             {
-                PatientName = parameters.GetValue<string>("patientFullName");
-                Debug.WriteLine(PatientName);
+                scannedPatient = parameters.GetValue<Patient>("patient");
+                
+                PatientName = $"{scannedPatient.Firstname} {scannedPatient.Lastname}";
+                Email = scannedPatient.Email;
+                Address = $"{scannedPatient.Street}\n{scannedPatient.City}\n{scannedPatient.Location}";
             }
+        }
+
+        private async void ReturnToPreviousPage()
+        {
+            await _navigationService.NavigateAsync("../NfcReadPatientTagPage");
+        }
+
+        private async void GoToVoiceRecognitionPage()
+        {
+            await _navigationService.NavigateAsync("../VoiceRecognition");
         }
     }
 }

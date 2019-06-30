@@ -10,15 +10,32 @@
         <StackLayout>
             <Label Text="U heeft tag van de volgende patient gescand"
                    TextColor="White"></Label>
-            <Label Text="{Binding PatientName}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                FontSize="Large"
-                TextColor="White"/>
-            <Label Text="Klopt dit?"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand"
-                TextColor="White"></Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Text="Naam" Grid.Column="0" Grid.Row="0" TextColor="White"/>
+                <Label Text="Email" Grid.Column="0" Grid.Row="1" TextColor="White"/>
+                <Label Text="Adres" Grid.Column="0" Grid.Row="2" TextColor="White"/>
+                <Label Text="{Binding PatientName}" Grid.Column="1" Grid.Row="0" TextColor="White"/>
+                <Label Text="{Binding Email}" Grid.Column="1" Grid.Row="1" TextColor="White"/>
+                <Label Text="{Binding Address}" Grid.Column="1" Grid.Row="2" TextColor="White"/>
+            </Grid>
+            
+            <Grid HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="Terug gaan" Grid.Column="0" Command="{Binding GoBackCommand}"/>
+                <Button Text="Ga verder" Grid.Column="1" Command="{Binding ProceedToNextPageCommand}"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

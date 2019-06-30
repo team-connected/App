@@ -20,11 +20,26 @@ namespace VoiceRecognitionUMC.ViewModels
         private IDeviceService deviceService;
         private INavigationService _navigationService;
         private ObservableCollection<DeviceListItem> deviceListItems;
+        private DeviceListItem selectedItem;
+        public DelegateCommand ProceedToNextPageCommand { get; private set; }
 
         public ObservableCollection<DeviceListItem> DeviceListItems
         {
             get { return this.deviceListItems; }
             set { SetProperty(ref this.deviceListItems, value); }
+        }
+
+        public DeviceListItem SelectedItem
+        {
+            get { return this.selectedItem; }
+            set
+            {
+                SetProperty(ref this.selectedItem, value);
+                if (SelectedItem != null)
+                {
+                    DeleteSelectedItem();
+                }
+            }
         }
 
 
@@ -34,6 +49,7 @@ namespace VoiceRecognitionUMC.ViewModels
             
             deviceService = new DeviceService();
             NfcDevice = DependencyService.Get<INfcForms>();
+            ProceedToNextPageCommand = new DelegateCommand(GoToScanPatientNfcTagPage);
 
             NfcDevice.NewTag += ReadTag;
         }
@@ -48,7 +64,7 @@ namespace VoiceRecognitionUMC.ViewModels
         async void LookUpSerialNumber(string sn)
         {
             var toastConfig = new ToastConfig("Tag gescand");
-            toastConfig.SetDuration(3000);
+            toastConfig.SetDuration(1500);
             toastConfig.SetBackgroundColor(System.Drawing.Color.White);
             toastConfig.SetMessageTextColor(System.Drawing.Color.Blue);
 
@@ -56,7 +72,7 @@ namespace VoiceRecognitionUMC.ViewModels
             try
             {
                 var foundDevice = await deviceService.GetDeviceAsync(sn);
-                if (isUnique(foundDevice.sn))
+                if (IsUnique(foundDevice.sn))
                 {
                     DeviceListItems.Add(new DeviceListItem
                     {
@@ -64,6 +80,13 @@ namespace VoiceRecognitionUMC.ViewModels
                         SerialNumber = foundDevice.sn,
                         DeviceType = foundDevice.type
                     });
+                } else {
+                    toastConfig = new ToastConfig("Dit apparaat is al een keer gescand");
+                    toastConfig.SetDuration(1500);
+                    toastConfig.SetBackgroundColor(System.Drawing.Color.White);
+                    toastConfig.SetMessageTextColor(System.Drawing.Color.Blue);
+
+                    UserDialogs.Instance.Toast(toastConfig);
                 }
             }
             catch (ArgumentOutOfRangeException ex)
@@ -79,7 +102,7 @@ namespace VoiceRecognitionUMC.ViewModels
             }
         }
 
-        private bool isUnique(string sn)
+        private bool IsUnique(string sn)
         {
             int count = 0;
             foreach(DeviceListItem dli in DeviceListItems)
@@ -92,5 +115,14 @@ namespace VoiceRecognitionUMC.ViewModels
             return count == 0;
         }
 
+        private void DeleteSelectedItem()
+        {
+            //in production
+        }
+
+        private async void GoToScanPatientNfcTagPage()
+        {
+            await _navigationService.NavigateAsync("../NfcReadPatientTagPage");
+        }
     }
 }

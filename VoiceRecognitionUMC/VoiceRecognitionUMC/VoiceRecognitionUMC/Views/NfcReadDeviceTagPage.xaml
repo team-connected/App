@@ -8,7 +8,7 @@
              BackgroundColor="#3C6EB7">
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding DeviceListItems}" RowHeight="70">
+            <ListView ItemsSource="{Binding DeviceListItems}" RowHeight="70" SelectedItem="{Binding SelectedItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -33,6 +33,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button Text="Ga verder" Command="{Binding ProceedToNextPageCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

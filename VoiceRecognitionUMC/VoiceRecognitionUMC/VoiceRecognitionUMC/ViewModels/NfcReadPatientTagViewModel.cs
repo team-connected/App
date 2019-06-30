@@ -40,7 +40,7 @@ namespace VoiceRecognitionUMC.ViewModels
         async void LookUpPatient(string nfcText)
         {
             var toastConfig = new ToastConfig("Tag gescand");
-            toastConfig.SetDuration(3000);
+            toastConfig.SetDuration(1500);
             toastConfig.SetBackgroundColor(System.Drawing.Color.White);
             toastConfig.SetMessageTextColor(System.Drawing.Color.Blue);
 
@@ -49,11 +49,10 @@ namespace VoiceRecognitionUMC.ViewModels
             {
 
                 var foundPatient = await patientService.GetPatient(nfcText);
-                var patientName = $"{foundPatient.Firstname} {foundPatient.Lastname}";
 
                 var navigationParameters = new NavigationParameters
                 {
-                    {"patientFullName", patientName }
+                    {"patient", foundPatient }
                 };
 
                 await _navigationService.NavigateAsync("../NfcReadPatientTagResultPage", navigationParameters);
