@@ -14,11 +14,6 @@
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"
                    TextColor="White"/>
-                <Label Text="{Binding TagFound}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                FontSize="Large"
-                TextColor="White"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

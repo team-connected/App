@@ -12,7 +12,7 @@ using Poz1.NFCForms.Droid;
 using Poz1.NFCForms.Abstract;
 using Android.Speech;
 using Xamarin.Forms;
-
+using Acr.UserDialogs;
 
 namespace VoiceRecognitionUMC.Droid
 {
@@ -37,7 +37,9 @@ namespace VoiceRecognitionUMC.Droid
             x = Xamarin.Forms.DependencyService.Get<INfcForms>() as NfcForms;
 
             base.OnCreate(savedInstanceState);
-            
+
+            UserDialogs.Init(this);
+
             LoadApplication(new App());
         }
 

@@ -1,4 +1,5 @@
-﻿using Poz1.NFCForms.Abstract;
+﻿using Acr.UserDialogs;
+using Poz1.NFCForms.Abstract;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
@@ -46,6 +47,12 @@ namespace VoiceRecognitionUMC.ViewModels
 
         async void LookUpSerialNumber(string sn)
         {
+            var toastConfig = new ToastConfig("Tag gescand");
+            toastConfig.SetDuration(3000);
+            toastConfig.SetBackgroundColor(System.Drawing.Color.White);
+            toastConfig.SetMessageTextColor(System.Drawing.Color.Blue);
+
+            UserDialogs.Instance.Toast(toastConfig);
             try
             {
                 var foundDevice = await deviceService.GetDeviceAsync(sn);
@@ -59,8 +66,15 @@ namespace VoiceRecognitionUMC.ViewModels
                     });
                 }
             }
-            catch (NullReferenceException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
+                toastConfig = new ToastConfig("Er is iets misgegaan. Mogelijk is dit geen geldige tag.");
+                toastConfig.SetDuration(5000);
+                toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
+                toastConfig.SetMessageTextColor(System.Drawing.Color.White);
+
+                UserDialogs.Instance.Toast(toastConfig);
+
                 Console.WriteLine(ex.Message);
             }
         }

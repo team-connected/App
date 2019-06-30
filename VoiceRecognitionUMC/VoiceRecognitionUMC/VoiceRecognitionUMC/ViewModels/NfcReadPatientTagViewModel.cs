@@ -1,4 +1,5 @@
-﻿using Poz1.NFCForms.Abstract;
+﻿using Acr.UserDialogs;
+using Poz1.NFCForms.Abstract;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -38,9 +39,14 @@ namespace VoiceRecognitionUMC.ViewModels
 
         async void LookUpPatient(string nfcText)
         {
+            var toastConfig = new ToastConfig("Tag gescand");
+            toastConfig.SetDuration(3000);
+            toastConfig.SetBackgroundColor(System.Drawing.Color.White);
+            toastConfig.SetMessageTextColor(System.Drawing.Color.Blue);
+
+            UserDialogs.Instance.Toast(toastConfig);
             try
             {
-                TagFound = "Halsband gescand. Een moment aub...";
 
                 var foundPatient = await patientService.GetPatient(nfcText);
                 var patientName = $"{foundPatient.Firstname} {foundPatient.Lastname}";
@@ -52,8 +58,15 @@ namespace VoiceRecognitionUMC.ViewModels
 
                 await _navigationService.NavigateAsync("../NfcReadPatientTagResultPage", navigationParameters);
             }
-            catch (NullReferenceException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
+                toastConfig = new ToastConfig("Er is iets misgegaan. Mogelijk is dit geen geldige tag.");
+                toastConfig.SetDuration(5000);
+                toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
+                toastConfig.SetMessageTextColor(System.Drawing.Color.White);
+
+                UserDialogs.Instance.Toast(toastConfig);
+
                 Console.WriteLine(ex.Message);
             }
         }

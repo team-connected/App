@@ -34,7 +34,7 @@ namespace VoiceRecognitionUMC.Persistence
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                throw new ArgumentOutOfRangeException(ex.Message);
             }
 
             return device[0];
