@@ -63,6 +63,8 @@ namespace VoiceRecognitionUMC.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::VoiceRecognitionUMC.Droid.Resource.Styleable.ProgressWheel_ahText;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::VoiceRecognitionUMC.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::VoiceRecognitionUMC.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
+			global::Poz1.NFCForms.Droid.Resource.String.ApplicationName = global::VoiceRecognitionUMC.Droid.Resource.String.ApplicationName;
+			global::Poz1.NFCForms.Droid.Resource.String.Hello = global::VoiceRecognitionUMC.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_fade_in = global::VoiceRecognitionUMC.Droid.Resource.Animation.abc_fade_in;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_fade_out = global::VoiceRecognitionUMC.Droid.Resource.Animation.abc_fade_out;
 			global::Xamarin.Forms.Platform.Android.Resource.Animation.abc_grow_fade_in_from_bottom = global::VoiceRecognitionUMC.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
@@ -6137,6 +6139,12 @@ namespace VoiceRecognitionUMC.Droid
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f0a003d
+			public const int ApplicationName = 2131361853;
+			
+			// aapt resource value: 0x7f0a003c
+			public const int Hello = 2131361852;
+			
 			// aapt resource value: 0x7f0a0015
 			public const int abc_action_bar_home_description = 2131361813;
 			
@@ -6233,8 +6241,8 @@ namespace VoiceRecognitionUMC.Droid
 			// aapt resource value: 0x7f0a0035
 			public const int character_counter_pattern = 2131361845;
 			
-			// aapt resource value: 0x7f0a003c
-			public const int library_name = 2131361852;
+			// aapt resource value: 0x7f0a003e
+			public const int library_name = 2131361854;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int mr_button_content_description = 2131361792;

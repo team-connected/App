@@ -21,7 +21,7 @@ namespace VoiceRecognitionUMC.Persistence
         {
             List<Device> device = new List<Device>();
 
-            var uri = new Uri($"http://umc-api.maartenmol.nl:5000/api/v1/device/_id={deviceId}");
+            var uri = new Uri($"http://umc-api.maartenmol.nl:5000/api/v1/device/sn={deviceId}");
 
             try
             {
@@ -34,7 +34,7 @@ namespace VoiceRecognitionUMC.Persistence
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                throw new ArgumentOutOfRangeException(ex.Message);
             }
 
             return device[0];

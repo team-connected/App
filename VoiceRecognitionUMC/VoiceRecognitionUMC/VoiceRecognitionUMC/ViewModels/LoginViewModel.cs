@@ -73,7 +73,7 @@ namespace VoiceRecognitionUMC.ViewModels
                 { "userId", userId }
             };
 
-            _navigationService.NavigateAsync("../VoiceRecognition", navigationParams);
+            _navigationService.NavigateAsync("../NfcReadDeviceTagPage", navigationParams);
         }
         #endregion
     }
