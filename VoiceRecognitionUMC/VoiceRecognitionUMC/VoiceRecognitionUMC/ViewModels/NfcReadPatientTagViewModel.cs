@@ -15,6 +15,7 @@ namespace VoiceRecognitionUMC.ViewModels
         private IPatientService patientService;
         private INavigationService _navigationService;
         private string tagFound;
+        private INavigationParameters allParameters;
 
         public string TagFound
         {
@@ -50,12 +51,9 @@ namespace VoiceRecognitionUMC.ViewModels
 
                 var foundPatient = await patientService.GetPatient(nfcText);
 
-                var navigationParameters = new NavigationParameters
-                {
-                    {"patient", foundPatient }
-                };
+                allParameters.Add("patient", foundPatient);
 
-                await _navigationService.NavigateAsync("../NfcReadPatientTagResultPage", navigationParameters);
+                await _navigationService.NavigateAsync("../NfcReadPatientTagResultPage", allParameters);
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -68,6 +66,12 @@ namespace VoiceRecognitionUMC.ViewModels
 
                 Console.WriteLine(ex.Message);
             }
+
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            allParameters = parameters;
         }
     }
 }

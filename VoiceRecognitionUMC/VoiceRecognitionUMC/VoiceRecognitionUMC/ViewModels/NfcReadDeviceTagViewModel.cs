@@ -22,6 +22,7 @@ namespace VoiceRecognitionUMC.ViewModels
         private ObservableCollection<DeviceListItem> deviceListItems;
         private DeviceListItem selectedItem;
         public DelegateCommand ProceedToNextPageCommand { get; private set; }
+        private INavigationParameters allParameters;
 
         public ObservableCollection<DeviceListItem> DeviceListItems
         {
@@ -125,20 +126,23 @@ namespace VoiceRecognitionUMC.ViewModels
         {
             if (DeviceListItems.Count > 0)
             {
-                var navigationParameters = new NavigationParameters
-                {
-                    {"deviceList", DeviceListItems }
-                };
-                await _navigationService.NavigateAsync("../NfcReadPatientTagPage", navigationParameters);
+                allParameters.Add("deviceList", DeviceListItems);
+                
+                await _navigationService.NavigateAsync("../NfcReadPatientTagPage", allParameters);
             } else
             {
                 var toastConfig = new ToastConfig("Scan de tag van minimaal 1 apparaat");
                 toastConfig.SetDuration(5000);
-                toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
+                toastConfig.SetBackgroundColor(System.Drawing.Color.White);
                 toastConfig.SetMessageTextColor(System.Drawing.Color.White);
 
                 UserDialogs.Instance.Toast(toastConfig);
             }
+        }
+
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            allParameters = parameters;
         }
     }
 }

@@ -16,6 +16,7 @@ namespace VoiceRecognitionUMC.ViewModels
         private string email;
         private string address;
         private Patient scannedPatient;
+        private INavigationParameters allParameters;
 
         public DelegateCommand GoBackCommand { get; private set; }
         public DelegateCommand ProceedToNextPageCommand { get; private set; }
@@ -46,6 +47,7 @@ namespace VoiceRecognitionUMC.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
+            allParameters = parameters;
             if (parameters.ContainsKey("patient"))
             {
                 scannedPatient = parameters.GetValue<Patient>("patient");
@@ -58,12 +60,12 @@ namespace VoiceRecognitionUMC.ViewModels
 
         private async void ReturnToPreviousPage()
         {
-            await _navigationService.NavigateAsync("../NfcReadPatientTagPage");
+            await _navigationService.NavigateAsync("../NfcReadPatientTagPage", allParameters);
         }
 
         private async void GoToVoiceRecognitionPage()
         {
-            await _navigationService.NavigateAsync("../VoiceRecognition");
+            await _navigationService.NavigateAsync("../VoiceRecognition", allParameters);
         }
     }
 }
