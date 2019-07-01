@@ -135,6 +135,20 @@ namespace VoiceRecognitionUMC.ViewModels
 
                 Metrics.Add(listItem);
             }
+            if (metric.pijnscore != "0")
+            {
+                var listItem = new MetricListItem
+                {
+                    MetricType = "Pijnscore",
+                    MetricValue = $"{metric.pijnscore}",
+                    Device = "",
+                    NurseName = $"{nurse.firstname} {nurse.lastname}",
+                    ID = metric._id,
+                    PatientName = $"{patient.Firstname} {patient.Lastname}"
+                };
+
+                Metrics.Add(listItem);
+            }
         }
 
         private void ItemSelected()
