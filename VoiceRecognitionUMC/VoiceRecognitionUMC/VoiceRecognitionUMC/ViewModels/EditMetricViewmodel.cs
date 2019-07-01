@@ -109,6 +109,13 @@ namespace VoiceRecognitionUMC.ViewModels
                     temperatuur = MetricValue
                 };
             }
+            if (metric.MetricType.ToLower() == "pijnscore")
+            {
+                updatedMetric = new UpdatePijnscore
+                {
+                    pijnscore = MetricValue
+                };
+            }
 
             _metricService.UpdateMetric(metric.ID, updatedMetric);
             var navigationParameters = new NavigationParameters
