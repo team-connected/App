@@ -158,15 +158,15 @@ namespace VoiceRecognitionUMC.ViewModels
 
             foreach (DeviceListItem device in devices)
             {
-                if (device.DeviceType.ToLower() == "bloeddruk")
+                if (device.DeviceType.ToLower() == "bloeddrukmeters")
                 {
                     deviceBloeddruk = device.DeviceId;
                 }
-                if (device.DeviceType.ToLower() == "temperatuur")
+                if (device.DeviceType.ToLower() == "thermometer")
                 {
                     deviceTemperatuur = device.DeviceId;
                 }
-                if (device.DeviceType.ToLower() == "gewicht")
+                if (device.DeviceType.ToLower() == "weegschaal")
                 {
                     deviceGewicht = device.DeviceId;
                 }

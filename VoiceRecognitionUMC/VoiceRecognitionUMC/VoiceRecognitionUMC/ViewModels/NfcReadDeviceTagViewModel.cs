@@ -80,7 +80,7 @@ namespace VoiceRecognitionUMC.ViewModels
                         DeviceName = foundDevice.name,
                         SerialNumber = foundDevice.sn,
                         DeviceType = foundDevice.type,
-                        DeviceId = foundDevice._id;
+                        DeviceId = foundDevice._id
                     });
                 } else {
                     toastConfig = new ToastConfig("Dit apparaat is al een keer gescand");
@@ -141,7 +141,7 @@ namespace VoiceRecognitionUMC.ViewModels
             }
         }
 
-        public override void OnNavigatedFrom(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             allParameters = parameters;
         }

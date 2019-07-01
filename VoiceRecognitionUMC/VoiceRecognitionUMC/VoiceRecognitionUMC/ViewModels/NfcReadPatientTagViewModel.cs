@@ -69,7 +69,7 @@ namespace VoiceRecognitionUMC.ViewModels
 
         }
 
-        public override void OnNavigatedFrom(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             allParameters = parameters;
         }
