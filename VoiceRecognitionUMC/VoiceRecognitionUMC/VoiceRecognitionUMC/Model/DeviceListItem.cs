@@ -9,5 +9,6 @@ namespace VoiceRecognitionUMC.Model
         public string DeviceName { get; set; }
         public string DeviceType { get; set; }
         public string SerialNumber { get; set; }
+        public string DeviceId { get; set; }
     }
 }

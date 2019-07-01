@@ -42,7 +42,6 @@ namespace VoiceRecognitionUMC.ViewModels
         {
             _navigationService = navigationService;
             ProceedToNextPageCommand = new DelegateCommand(GoToVoiceRecognitionPage);
-            GoBackCommand = new DelegateCommand(ReturnToPreviousPage);
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -58,14 +57,9 @@ namespace VoiceRecognitionUMC.ViewModels
             }
         }
 
-        private async void ReturnToPreviousPage()
-        {
-            await _navigationService.NavigateAsync("../NfcReadPatientTagPage", allParameters);
-        }
-
         private async void GoToVoiceRecognitionPage()
         {
-            await _navigationService.NavigateAsync("../VoiceRecognition", allParameters);
+            await _navigationService.NavigateAsync("VoiceRecognition", allParameters);
         }
     }
 }

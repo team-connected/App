@@ -53,7 +53,7 @@ namespace VoiceRecognitionUMC.ViewModels
 
                 allParameters.Add("patient", foundPatient);
 
-                await _navigationService.NavigateAsync("../NfcReadPatientTagResultPage", allParameters);
+                await _navigationService.NavigateAsync("NfcReadPatientTagResultPage", allParameters);
             }
             catch (ArgumentOutOfRangeException ex)
             {

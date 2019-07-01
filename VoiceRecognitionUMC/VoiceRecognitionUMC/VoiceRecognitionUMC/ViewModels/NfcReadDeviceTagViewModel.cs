@@ -79,7 +79,8 @@ namespace VoiceRecognitionUMC.ViewModels
                     {
                         DeviceName = foundDevice.name,
                         SerialNumber = foundDevice.sn,
-                        DeviceType = foundDevice.type
+                        DeviceType = foundDevice.type,
+                        DeviceId = foundDevice._id;
                     });
                 } else {
                     toastConfig = new ToastConfig("Dit apparaat is al een keer gescand");
@@ -128,7 +129,7 @@ namespace VoiceRecognitionUMC.ViewModels
             {
                 allParameters.Add("deviceList", DeviceListItems);
                 
-                await _navigationService.NavigateAsync("../NfcReadPatientTagPage", allParameters);
+                await _navigationService.NavigateAsync("NfcReadPatientTagPage", allParameters);
             } else
             {
                 var toastConfig = new ToastConfig("Scan de tag van minimaal 1 apparaat");
