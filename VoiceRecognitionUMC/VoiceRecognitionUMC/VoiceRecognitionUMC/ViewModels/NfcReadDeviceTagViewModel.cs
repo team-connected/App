@@ -46,7 +46,7 @@ namespace VoiceRecognitionUMC.ViewModels
         public NfcReadDeviceTagViewModel(INavigationService navigationService) : base(navigationService)
         {
             deviceListItems = new ObservableCollection<DeviceListItem>();
-            
+            _navigationService = navigationService;
             deviceService = new DeviceService();
             NfcDevice = DependencyService.Get<INfcForms>();
             ProceedToNextPageCommand = new DelegateCommand(GoToScanPatientNfcTagPage);
@@ -88,6 +88,7 @@ namespace VoiceRecognitionUMC.ViewModels
 
                     UserDialogs.Instance.Toast(toastConfig);
                 }
+                
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -122,7 +123,22 @@ namespace VoiceRecognitionUMC.ViewModels
 
         private async void GoToScanPatientNfcTagPage()
         {
-            await _navigationService.NavigateAsync("../NfcReadPatientTagPage");
+            if (DeviceListItems.Count > 0)
+            {
+                var navigationParameters = new NavigationParameters
+                {
+                    {"deviceList", DeviceListItems }
+                };
+                await _navigationService.NavigateAsync("../NfcReadPatientTagPage", navigationParameters);
+            } else
+            {
+                var toastConfig = new ToastConfig("Scan de tag van minimaal 1 apparaat");
+                toastConfig.SetDuration(5000);
+                toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
+                toastConfig.SetMessageTextColor(System.Drawing.Color.White);
+
+                UserDialogs.Instance.Toast(toastConfig);
+            }
         }
     }
 }

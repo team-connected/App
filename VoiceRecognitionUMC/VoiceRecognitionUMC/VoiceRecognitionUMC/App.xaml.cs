@@ -26,7 +26,7 @@ namespace VoiceRecognitionUMC
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/NfcReadPatientTagPage");
+            await NavigationService.NavigateAsync("NavigationPage/Login");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

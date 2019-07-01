@@ -8,6 +8,7 @@
              BackgroundColor="#3C6EB7">
     <ContentPage.Content>
         <StackLayout>
+            <Label Text="Scan hier de NFC tags van de apparaten" FontSize="Large" TextColor="White"/>
             <ListView ItemsSource="{Binding DeviceListItems}" RowHeight="70" SelectedItem="{Binding SelectedItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
