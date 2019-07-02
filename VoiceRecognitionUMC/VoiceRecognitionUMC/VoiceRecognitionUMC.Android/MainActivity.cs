@@ -10,6 +10,9 @@ using Android.Content;
 using Android.Speech;
 using Xamarin.Forms;
 using Acr.UserDialogs;
+using Poz1.NFCForms.Droid;
+using Android.Nfc;
+using Poz1.NFCForms.Abstract;
 
 namespace VoiceRecognitionUMC.Droid
 {
@@ -17,18 +20,30 @@ namespace VoiceRecognitionUMC.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity, IMessageSender
     {
         private readonly int VOICE = 10;
+        public NfcAdapter NFCdevice;
+        public NfcForms x;
         internal static MainActivity Instance { get; private set; }
         
         protected override void OnCreate(Bundle savedInstanceState)
         {
             Instance = this;
-            UserDialogs.Init(this);
+
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            NfcManager NfcManager = (NfcManager)Android.App.Application.Context.GetSystemService(Context.NfcService);
+            NFCdevice = NfcManager.DefaultAdapter;
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-                      
+
+            Xamarin.Forms.DependencyService.Register<INfcForms, NfcForms>();
+            x = Xamarin.Forms.DependencyService.Get<INfcForms>() as NfcForms;
+
 
             base.OnCreate(savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            UserDialogs.Init(this);
+
             LoadApplication(new App());
         }
 
@@ -51,6 +66,44 @@ namespace VoiceRecognitionUMC.Droid
                 }
             }
             base.OnActivityResult(requestCode, resultCode, data);
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (NFCdevice != null)
+            {
+                var intent = new Intent(this, GetType()).AddFlags(ActivityFlags.SingleTop);
+                NFCdevice.EnableForegroundDispatch
+                (
+                    this,
+                    PendingIntent.GetActivity(this, 0, intent, 0),
+                    new[] { new IntentFilter(NfcAdapter.ActionTechDiscovered) },
+                    new String[][] {new string[] {
+                            NFCTechs.Ndef,
+                        },
+                        new string[] {
+                            NFCTechs.MifareClassic,
+                        },
+                        new string[]
+                        {
+                            NFCTechs.IsoDep
+                        },
+                    }
+                );
+            }
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            NFCdevice.DisableForegroundDispatch(this);
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+            x.OnNewIntent(this, intent);
         }
     }
 }

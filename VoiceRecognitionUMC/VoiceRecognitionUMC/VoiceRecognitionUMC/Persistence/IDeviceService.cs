@@ -8,6 +8,7 @@ namespace VoiceRecognitionUMC.Persistence
 {
     interface IDeviceService
     {
+        Task<Device> GetDeviceAsyncById(string deviceId);
         Task<Device> GetDeviceAsync(string deviceId);
 
     }

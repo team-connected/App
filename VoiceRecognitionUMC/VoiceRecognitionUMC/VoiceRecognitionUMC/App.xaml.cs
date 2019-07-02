@@ -56,6 +56,11 @@ namespace VoiceRecognitionUMC
             containerRegistry.RegisterForNavigation<Login, LoginViewModel>();
             containerRegistry.RegisterForNavigation<VoiceRecognition, VoiceRecognitionViewModel>();
             containerRegistry.RegisterForNavigation<MetricResult, MetricResultViewModel>();
+            containerRegistry.RegisterForNavigation<NFCHandler, NfcHandlerViewModel>();
+            containerRegistry.RegisterForNavigation<NfcReadDeviceTagPage, NfcReadDeviceTagViewModel>();
+            containerRegistry.RegisterForNavigation<NfcReadNurseTagPage, NfcReadNurseTagViewModel>();
+            containerRegistry.RegisterForNavigation<NfcReadPatientTagPage, NfcReadPatientTagViewModel>();
+            containerRegistry.RegisterForNavigation<NfcReadPatientTagResultPage, NfcReadPatientTagResultViewModel>();
             containerRegistry.RegisterForNavigation<EditMetric, EditMetricViewmodel>();
         }
 

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Acr.UserDialogs;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace VoiceRecognitionUMC.ViewModels
 {
@@ -20,6 +21,8 @@ namespace VoiceRecognitionUMC.ViewModels
         private IMetricService _metricService;
         private List<string> metrics;
         private string userId;
+        private Patient patient;
+        private ObservableCollection<DeviceListItem> devices;
         #endregion
 
         #region COMMANDS
@@ -70,6 +73,8 @@ namespace VoiceRecognitionUMC.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             this.userId = parameters.GetValue<string>("userId");
+            this.patient = parameters.GetValue<Patient>("patient");
+            this.devices = parameters.GetValue<ObservableCollection<DeviceListItem>>("deviceList");
 
             Speak("U kunt beginnen met de meting");
 
@@ -245,11 +250,32 @@ namespace VoiceRecognitionUMC.ViewModels
         private async void FinishMetric()
         {
             DateTime now = DateTime.Now;
+
+            string deviceBloeddruk = "";
+            string deviceGewicht = "";
+            string deviceTemperatuur = "";
+
+            foreach (DeviceListItem device in devices)
+            {
+                if (device.DeviceType.ToLower() == "bloeddrukmeters")
+                {
+                    deviceBloeddruk = device.DeviceId;
+                }
+                if (device.DeviceType.ToLower() == "thermometer")
+                {
+                    deviceTemperatuur = device.DeviceId;
+                }
+                if (device.DeviceType.ToLower() == "weegschaal")
+                {
+                    deviceGewicht = device.DeviceId;
+                }
+            }
+
             MetricCreate newMetric = new MetricCreate
             {
-                device_bloeddruk = "1391109f9910481c933970c5db966358",
-                device_gewicht = "h8vh16kgcdh9w26gj5tjfic94m2p4bfy",
-                device_temperatuur = "y363fqujy6vlpzqtxan4ivkf98gi99ey",
+                device_bloeddruk = deviceBloeddruk,
+                device_gewicht = deviceGewicht,
+                device_temperatuur = deviceTemperatuur,
                 metric_type = "",
                 nurse_id = userId,
                 timestamp = now.ToString("yyyy/MM/dd HH:mm:ss"),
@@ -257,7 +283,7 @@ namespace VoiceRecognitionUMC.ViewModels
             };
 
             UserDialogs.Instance.ShowLoading("Opslaan");
-            var metricResponse = await _metricService.CreateMetric(newMetric, "95zkai0z3whyraaigs7k0wh1g15yb64s");
+            var metricResponse = await _metricService.CreateMetric(newMetric, patient._id);
 
             foreach (string metric in metrics)
             {
@@ -273,7 +299,7 @@ namespace VoiceRecognitionUMC.ViewModels
             var navigationParams = new NavigationParameters
             {
                 { "metricId", metricResponse.createMetric },
-                {"patientId",  "95zkai0z3whyraaigs7k0wh1g15yb64s"}
+                {"patientId",  patient._id}
             };
 
             UserDialogs.Instance.HideLoading();

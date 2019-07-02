@@ -17,11 +17,34 @@ namespace VoiceRecognitionUMC.Persistence
         {
             _client = new HttpClient();
         }
-        public async Task<Device> GetDeviceAsync(string deviceId)
+        public async Task<Device> GetDeviceAsyncById(string deviceId)
         {
             List<Device> device = new List<Device>();
 
             var uri = new Uri($"http://umc-api.maartenmol.nl:5000/api/v1/device/_id={deviceId}");
+
+            try
+            {
+                var response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    device = JsonConvert.DeserializeObject<List<Device>>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return device[0];
+        }
+
+        public async Task<Device> GetDeviceAsync(string deviceId)
+        {
+            List<Device> device = new List<Device>();
+
+            var uri = new Uri($"http://umc-api.maartenmol.nl:5000/api/v1/device/sn={deviceId}");
 
             try
             {

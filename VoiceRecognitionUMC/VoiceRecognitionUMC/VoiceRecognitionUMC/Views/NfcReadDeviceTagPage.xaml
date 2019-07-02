@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="VoiceRecognitionUMC.Views.NfcReadDeviceTagPage"
+             BackgroundColor="#3C6EB7"
+             Title="Scan Apparaat">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Scan hier de NFC tags van de apparaten" FontSize="Large" TextColor="White"/>
+            <ListView ItemsSource="{Binding DeviceListItems}" SelectedItem="{Binding SelectedItem}" HasUnevenRows="True" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="2" Margin="0,5,0,5" HeightRequest="70">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="Naam" Grid.Column="0" Grid.Row="0" TextColor="Black"/>
+                                    <Label Text="Soort" Grid.Column="0" Grid.Row="1" TextColor="Black"/>
+                                    <Label Text="Serienummer" Grid.Column="0" Grid.Row="2" TextColor="Black"/>
+                                    <Label Text="{Binding DeviceName}" Grid.Column="1" Grid.Row="0" TextColor="Black"/>
+                                    <Label Text="{Binding DeviceType}" Grid.Column="1" Grid.Row="1" TextColor="Black"/>
+                                    <Label Text="{Binding SerialNumber}" Grid.Column="1" Grid.Row="2" TextColor="Black"/>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Ga verder" Command="{Binding ProceedToNextPageCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

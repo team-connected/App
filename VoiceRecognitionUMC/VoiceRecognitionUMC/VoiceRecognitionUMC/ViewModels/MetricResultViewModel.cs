@@ -90,7 +90,7 @@ namespace VoiceRecognitionUMC.ViewModels
             if (metric.bloeddruk != "0")
             {
 
-                var deviceName = await _deviceService.GetDeviceAsync(metric.device_bloeddruk);
+                var deviceName = await _deviceService.GetDeviceAsyncById(metric.device_bloeddruk);
 
                 var listItem = new MetricListItem
                 {
@@ -106,7 +106,7 @@ namespace VoiceRecognitionUMC.ViewModels
             }
             if (metric.gewicht != "0")
             {
-                var deviceName = await _deviceService.GetDeviceAsync(metric.device_gewicht);
+                var deviceName = await _deviceService.GetDeviceAsyncById(metric.device_gewicht);
                 var listItem = new MetricListItem
                 {
                     MetricType = "Gewicht",
@@ -121,7 +121,7 @@ namespace VoiceRecognitionUMC.ViewModels
             }
             if (metric.temperatuur != "0")
             {
-                var deviceName = await _deviceService.GetDeviceAsync(metric.device_temperatuur);
+                var deviceName = await _deviceService.GetDeviceAsyncById(metric.device_temperatuur);
 
                 var listItem = new MetricListItem
                 {
