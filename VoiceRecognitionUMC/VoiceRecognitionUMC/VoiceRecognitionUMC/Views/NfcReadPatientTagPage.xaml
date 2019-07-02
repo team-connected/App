@@ -10,7 +10,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout>
-                <Label Text="Scan de patientnummer van de patient"
+                <Label Text="Scan het patientnummer van de patient"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"

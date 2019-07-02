@@ -23,6 +23,7 @@ namespace VoiceRecognitionUMC.ViewModels
         private string patientId;
         private IPatientService _patientService;
         private string nurseName;
+        private string userId;
         #endregion|
 
         #region COMMMANDS
@@ -74,6 +75,7 @@ namespace VoiceRecognitionUMC.ViewModels
             {
                 metricId = parameters.GetValue<string>("metricId");
                 patientId = parameters.GetValue<string>("patientId");
+                userId = parameters.GetValue<string>("userId");
             }
             FillList();
         }
@@ -166,7 +168,7 @@ namespace VoiceRecognitionUMC.ViewModels
 
         public void Save()
         {
-            _navigationService.NavigateAsync("../Login");
+            _navigationService.NavigateAsync("../../../../Login");
         }
         #endregion
     }

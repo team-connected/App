@@ -196,7 +196,8 @@ namespace VoiceRecognitionUMC.ViewModels
             var navigationParams = new NavigationParameters
             {
                 { "metricId", metricResponse.createMetric },
-                {"patientId",  patient._id}
+                {"patientId",  patient._id},
+                {"userId", userId }
             };
 
             UserDialogs.Instance.HideLoading();
