@@ -55,21 +55,22 @@ namespace VoiceRecognitionUMC.ViewModels
             NfcDevice.NewTag += ReadTag;
         }
 
-        public void ReadTag(object sender, NfcFormsTag e)
+        public async void ReadTag(object sender, NfcFormsTag e)
         {
             var encoding = Encoding.UTF8.GetString(e.NdefMessage.ToByteArray());
             var sn = encoding.Substring(7, encoding.Length - 7);
-            LookUpSerialNumber(sn);
+            await LookUpSerialNumber(sn);
         }
 
-        async void LookUpSerialNumber(string sn)
+        private async Task LookUpSerialNumber(string sn)
         {
             var toastConfig = new ToastConfig("Tag gescand");
             toastConfig.SetDuration(1500);
             toastConfig.SetBackgroundColor(System.Drawing.Color.White);
-            toastConfig.SetMessageTextColor(System.Drawing.Color.Blue);
+            toastConfig.SetMessageTextColor(System.Drawing.Color.Green);
 
             UserDialogs.Instance.Toast(toastConfig);
+
             try
             {
                 var foundDevice = await deviceService.GetDeviceAsync(sn);
@@ -82,15 +83,17 @@ namespace VoiceRecognitionUMC.ViewModels
                         DeviceType = foundDevice.type,
                         DeviceId = foundDevice._id
                     });
-                } else {
+                }
+                else
+                {
                     toastConfig = new ToastConfig("Dit apparaat is al een keer gescand");
                     toastConfig.SetDuration(1500);
                     toastConfig.SetBackgroundColor(System.Drawing.Color.White);
-                    toastConfig.SetMessageTextColor(System.Drawing.Color.Blue);
+                    toastConfig.SetMessageTextColor(System.Drawing.Color.Red);
 
                     UserDialogs.Instance.Toast(toastConfig);
                 }
-                
+
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -135,7 +138,7 @@ namespace VoiceRecognitionUMC.ViewModels
                 var toastConfig = new ToastConfig("Scan de tag van minimaal 1 apparaat");
                 toastConfig.SetDuration(5000);
                 toastConfig.SetBackgroundColor(System.Drawing.Color.White);
-                toastConfig.SetMessageTextColor(System.Drawing.Color.White);
+                toastConfig.SetMessageTextColor(System.Drawing.Color.Red);
 
                 UserDialogs.Instance.Toast(toastConfig);
             }

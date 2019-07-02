@@ -18,7 +18,6 @@ namespace VoiceRecognitionUMC.ViewModels
         private Patient scannedPatient;
         private INavigationParameters allParameters;
 
-        public DelegateCommand GoBackCommand { get; private set; }
         public DelegateCommand ProceedToNextPageCommand { get; private set; }
 
         public string PatientName

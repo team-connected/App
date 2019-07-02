@@ -4,6 +4,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using VoiceRecognitionUMC.Persistence;
 using Xamarin.Forms;
 
@@ -31,19 +32,19 @@ namespace VoiceRecognitionUMC.ViewModels
             device.NewTag += ReadTag;
         }
 
-        void ReadTag(object sender, NfcFormsTag e)
+        async void ReadTag(object sender, NfcFormsTag e)
         {
             var encoding = Encoding.UTF8.GetString(e.NdefMessage.ToByteArray());
             var nfcText = encoding.Substring(7, encoding.Length - 7);
-            LookUpPatient(nfcText);
+            await LookUpPatient(nfcText);
         }
 
-        async void LookUpPatient(string nfcText)
+        async Task LookUpPatient(string nfcText)
         {
             var toastConfig = new ToastConfig("Tag gescand");
             toastConfig.SetDuration(1500);
             toastConfig.SetBackgroundColor(System.Drawing.Color.White);
-            toastConfig.SetMessageTextColor(System.Drawing.Color.Blue);
+            toastConfig.SetMessageTextColor(System.Drawing.Color.Green);
 
             UserDialogs.Instance.Toast(toastConfig);
             try
@@ -52,7 +53,7 @@ namespace VoiceRecognitionUMC.ViewModels
                 var foundPatient = await patientService.GetPatient(nfcText);
 
                 allParameters.Add("patient", foundPatient);
-
+                
                 await _navigationService.NavigateAsync("NfcReadPatientTagResultPage", allParameters);
             }
             catch (ArgumentOutOfRangeException ex)

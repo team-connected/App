@@ -27,15 +27,7 @@
                 <Label Text="{Binding Email}" Grid.Column="1" Grid.Row="1" TextColor="White"/>
                 <Label Text="{Binding Address}" Grid.Column="1" Grid.Row="2" TextColor="White"/>
             </Grid>
-            
-            <Grid HorizontalOptions="Center" VerticalOptions="EndAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Text="Terug gaan" Grid.Column="0" Command="{Binding GoBackCommand}"/>
-                <Button Text="Ga verder" Grid.Column="1" Command="{Binding ProceedToNextPageCommand}"/>
-            </Grid>
+            <Button Text="Ga verder" Grid.Column="1" Command="{Binding ProceedToNextPageCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

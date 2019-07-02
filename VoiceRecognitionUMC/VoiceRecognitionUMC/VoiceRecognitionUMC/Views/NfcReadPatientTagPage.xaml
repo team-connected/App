@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout>
-                <Label Text="Scan de halsband van de patient"
+                <Label Text="Scan de patientnummer van de patient"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" 
                    FontSize="Large"
