@@ -152,7 +152,7 @@ namespace VoiceRecognitionUMC.ViewModels
 
         public void Save()
         {
-            _navigationService.NavigateAsync("../Login");
+            _navigationService.NavigateAsync("../../../../Login");
         }
         #endregion
     }
