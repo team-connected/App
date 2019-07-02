@@ -43,8 +43,8 @@ namespace VoiceRecognitionUMC.ViewModels
         {
             var toastConfig = new ToastConfig("Tag gescand");
             toastConfig.SetDuration(1500);
-            toastConfig.SetBackgroundColor(System.Drawing.Color.White);
-            toastConfig.SetMessageTextColor(System.Drawing.Color.Green);
+            toastConfig.SetBackgroundColor(System.Drawing.Color.Green);
+            toastConfig.SetMessageTextColor(System.Drawing.Color.White);
 
             UserDialogs.Instance.Toast(toastConfig);
             try

@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="VoiceRecognitionUMC.Views.NfcReadPatientTagPage"
-             BackgroundColor="#3C6EB7">
+             BackgroundColor="#3C6EB7"
+             Title="Scan Patiënt">
     <ContentPage.Content>
         <StackLayout>
             <StackLayout>

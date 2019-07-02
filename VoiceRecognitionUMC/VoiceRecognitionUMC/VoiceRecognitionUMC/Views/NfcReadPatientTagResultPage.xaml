@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="VoiceRecognitionUMC.Views.NfcReadPatientTagResultPage"
-             BackgroundColor="#3C6EB7">
+             BackgroundColor="#3C6EB7"
+             Title="Resultaat">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="U heeft tag van de volgende patient gescand"
@@ -20,14 +21,14 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Text="Naam" Grid.Column="0" Grid.Row="0" TextColor="White"/>
-                <Label Text="Email" Grid.Column="0" Grid.Row="1" TextColor="White"/>
-                <Label Text="Adres" Grid.Column="0" Grid.Row="2" TextColor="White"/>
+                <Image Source="patientWhite.png" Grid.Column="0" Grid.Row="0" HeightRequest="50" WidthRequest="50"/>
+                <Image Source="email.png"  Grid.Column="0" Grid.Row="1" HeightRequest="50" WidthRequest="50"/>
+                <Image Source="location.png" Grid.Column="0" Grid.Row="2" HeightRequest="50" WidthRequest="50"/>
                 <Label Text="{Binding PatientName}" Grid.Column="1" Grid.Row="0" TextColor="White"/>
                 <Label Text="{Binding Email}" Grid.Column="1" Grid.Row="1" TextColor="White"/>
                 <Label Text="{Binding Address}" Grid.Column="1" Grid.Row="2" TextColor="White"/>
             </Grid>
-            <Button Text="Ga verder" Grid.Column="1" Command="{Binding ProceedToNextPageCommand}"/>
+            <Button Text="Ga verder" Grid.Column="1" Command="{Binding ProceedToNextPageCommand}" VerticalOptions="EndAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -42,7 +42,6 @@ namespace VoiceRecognitionUMC.ViewModels
             metrics = new List<string>();
 
             DateTime now = DateTime.Now;
-            Console.WriteLine(now.ToString("yyyy/MM/dd HH:mm:ss"));
 
             try
             {
@@ -95,11 +94,6 @@ namespace VoiceRecognitionUMC.ViewModels
                         {
                             metrics.Add(line);
                         }
-                    }
-
-                    foreach (string s in metrics)
-                    {
-                        Console.WriteLine(s);
                     }
                 }
             }

@@ -66,8 +66,8 @@ namespace VoiceRecognitionUMC.ViewModels
         {
             var toastConfig = new ToastConfig("Tag gescand");
             toastConfig.SetDuration(1500);
-            toastConfig.SetBackgroundColor(System.Drawing.Color.White);
-            toastConfig.SetMessageTextColor(System.Drawing.Color.Green);
+            toastConfig.SetBackgroundColor(System.Drawing.Color.Green);
+            toastConfig.SetMessageTextColor(System.Drawing.Color.White);
 
             UserDialogs.Instance.Toast(toastConfig);
 
@@ -88,8 +88,8 @@ namespace VoiceRecognitionUMC.ViewModels
                 {
                     toastConfig = new ToastConfig("Dit apparaat is al een keer gescand");
                     toastConfig.SetDuration(1500);
-                    toastConfig.SetBackgroundColor(System.Drawing.Color.White);
-                    toastConfig.SetMessageTextColor(System.Drawing.Color.Red);
+                    toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
+                    toastConfig.SetMessageTextColor(System.Drawing.Color.White);
 
                     UserDialogs.Instance.Toast(toastConfig);
                 }
@@ -137,8 +137,8 @@ namespace VoiceRecognitionUMC.ViewModels
             {
                 var toastConfig = new ToastConfig("Scan de tag van minimaal 1 apparaat");
                 toastConfig.SetDuration(5000);
-                toastConfig.SetBackgroundColor(System.Drawing.Color.White);
-                toastConfig.SetMessageTextColor(System.Drawing.Color.Red);
+                toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
+                toastConfig.SetMessageTextColor(System.Drawing.Color.White);
 
                 UserDialogs.Instance.Toast(toastConfig);
             }
