@@ -58,12 +58,12 @@ namespace VoiceRecognitionUMC.ViewModels
             }
             catch (ArgumentOutOfRangeException ex)
             {
-                toastConfig = new ToastConfig("Er is iets misgegaan. Mogelijk is dit geen geldige tag.");
+                /*toastConfig = new ToastConfig("Er is iets misgegaan. Mogelijk is dit geen geldige tag.");
                 toastConfig.SetDuration(5000);
                 toastConfig.SetBackgroundColor(System.Drawing.Color.Firebrick);
                 toastConfig.SetMessageTextColor(System.Drawing.Color.White);
 
-                UserDialogs.Instance.Toast(toastConfig);
+                UserDialogs.Instance.Toast(toastConfig);*/
 
                 Console.WriteLine(ex.Message);
             }
